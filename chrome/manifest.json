@@ -1,0 +1,20 @@
+{
+    "manifest_version": 2,
+    "name": "Gel-Glacial",
+    "description": "Pour améliorer le site de Génie Élec-Info",
+    "version": "1.0",
+
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "activeTab",
+        "https://ajax.googleapis.com/"
+    ],
+    "content_scripts": [{
+        "matches": ["http://www.gel.usherbrooke.ca/*"],
+        "js": ["main.js"],
+        "css": ["style.css"]
+    }]
+}

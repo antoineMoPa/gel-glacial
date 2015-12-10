@@ -1,0 +1,16 @@
+{
+  "title": "Gel Glacial",
+  "name": "gelglacial",
+  "version": "0.0.1",
+  "description": "Pour améliorer l'interface de gel.usherbrooke.ca",
+  "main": "index.js",
+  "author": "Antoine Morin-Paulhus",
+  "engines": {
+    "firefox": ">=38.0a1",
+    "fennec": ">=38.0a1"
+  },
+  "license": "GPLv3",
+  "keywords": [
+    "jetpack"
+  ]
+}

@@ -1,61 +1,81 @@
-
-function listen_principal_change(){
-    principal = document.querySelectorAll("frame[name=principal]")[0];
-    
-    principal.onload = function(){
-        var path = principal.contentWindow.location.pathname;
-        
-    }
-    
-    function match_path(path){
-        
-    }
-}
-
+/* 
+   Selon des regex qui examinent la page principale en cours,
+   on va exécuter différentes fonctions:
+*/
 var listeners = [
     {
-        path_match: /notesEtu\.php$/,
-        callback: function(body){
-            addons_notes_etu(body);
+        path_regex: /notesEtu\.php$/,
+        callback: function(body,root){
+            // On défini ça ailleurs pour alléger
+            addons_notes_etu(body,root);
         }
     }
 ];
 
-function addons_notes_etu(){
-    console.log("notes etu");
+listen_principal_change();
+
+function listen_principal_change(){
+    var principal = document.querySelectorAll("frame[name=principal]")[0];
+
+    /* Chaque fois que ça load */
+    principal.onload = function(){
+        var path = principal.contentWindow.location.pathname;
+        /* On regarde si on a des fonctions à exécuter */
+        match_path(path);
+    }
+    
+    function match_path(path){
+        console.log(path);
+        /* Est-ce qu'on trouve des petites fonctions à exécuter? */
+        for(var l in listeners){
+            var listener = listeners[l];
+            if(listener.path_regex.test(path)){
+                /* ET OUI! ON EN A UNE, YASS, PRAISE THE LORD */
+                /* Fallait le savoir: */
+                var principal_body = principal.contentDocument.body;
+                var root = principal.contentWindow;
+                listener.callback(principal_body,root);
+            }
+        }
+    }
 }
 
-/*
-  On crée la bar de gel-glacial
- */
-var bar = document.createElement("div");
-bar.classList.add("gel-glacial-bar");
+function addons_notes_etu(body,root){
+    /*
+      On crée la bar de gel-glacial
+    */
+    var bar = document.createElement("div");
+    bar.classList.add("gel-glacial-bar");
+    
+    var button = document.createElement("button");
+    button.innerText = "Convertir en %"
+    button.classList.add("gel-glacial");
+    // On attache l'évènement:
+    button.onclick = function(){
+        convertir_notes_etu_en_pourcentage(body, root);
+    }
+    bar.appendChild(button);
+    body.insertBefore(bar,body.children[0]);
+}
 
-/* 
-   Les frames, c'est aucunement adapté aux mobiles, 
-   ça fait vraiment < 2006 comme code.
-   Il faut donc travailler pour aller chercher le body du frame banniere
-   pour ajouter le contenu qu'on veut...
-*/
+function convertir_notes_etu_en_pourcentage(body, root){    
+    var items = root.dataGrille.items;
+    var ponderation_items = root.dataToolTip;
 
-var banner = document.body.querySelectorAll("frame[name='banniere']")[0];
-var banner_body = banner.contentDocument.body;
+    var table_rows = body.querySelectorAll(".dojoxGridMasterView .dojoxGridRow");
 
-/*
-  Ça c'est de l'archéologie web
-  Documentation archéologique des framesets : http://www.w3.org/TR/WD-html40-970708/present/frames.html
- */
-var frameset = document.querySelectorAll("frameset")[0];
-var bar_height = 50;
-var banniere_height = 75;
-var rows_for_banniere = bar_height + banniere_height;
-/* 
-   normalement, cet attribut est a 75,* 
-   75px pour le premier frame (la baniere)
-   le reste de l'espace pour les autres frameset le contenu de la page
-   On se rajoute de l'espace pour la barre
-*/
-frameset.setAttribute("rows", rows_for_banniere + ",*");
-
-
-banner_body.appendChild(bar);
+    for(var i = 0; i < items.length; i++){
+        var row = table_rows[i].querySelectorAll("td.dojoxGridCell");
+        for(var j = 0; j < row.length; j++){
+            // Grid elements are offseted by 3 from the real td elements
+            if(items[i][j-3] != undefined && typeof items[i][j-3][0] == "number"){
+                if(ponderation_items[i][j-3] != undefined){
+                    var pond = ponderation_items[i][j-3].ponderation;
+                    var number = items[i][j-3][0];
+                    var percent = (number / pond * 100).toFixed(1);
+                    row[j].innerHTML = "<span style='font-size:8px;'>" + percent + "%</span>";
+                }
+            }
+        }
+    }
+}

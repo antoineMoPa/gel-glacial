@@ -11,11 +11,6 @@ function firefox_init_button(){
             "16": "./icon-16.png",
             "32": "./icon-32.png",
             "64": "./icon-64.png"
-        },
-        onClick: handleClick
+        }        
     });
-    
-    function handleClick(state) {
-        tabs.open("http://www.mozilla.org/");
-    }
 }

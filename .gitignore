@@ -21,3 +21,7 @@ tramp
 
 # elpa packages
 /elpa/
+
+# Fichiers crées automatiquement
+chrome/main.js
+firefox/main.js

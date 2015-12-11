@@ -24,4 +24,6 @@ tramp
 
 # Fichiers crées automatiquement
 chrome/main.js
-firefox/main.js
+firefox/data/main.js
+chrome/style.css
+firefox/data/style.css

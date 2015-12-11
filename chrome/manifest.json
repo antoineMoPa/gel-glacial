@@ -3,7 +3,7 @@
     "name": "Gel-Glacial",
     "description": "Pour améliorer le site de Génie Élec-Info",
     "version": "1.0",
-
+    
     "browser_action": {
         "default_icon": "icon.png",
         "default_popup": "popup.html"
@@ -15,6 +15,7 @@
     "content_scripts": [{
         "matches": ["http://www.gel.usherbrooke.ca/*"],
         "js": ["main.js"],
+        "all_frames": true,
         "css": ["style.css"]
     }]
 }

@@ -1,5 +1,19 @@
 # GEL GLACIAL
 
+## Structure de fichiers
+
+Dossier chrome:
+
+Tout ce qui est propre à chrome
+
+Dossier firefox:
+
+Tout ce qui est propre à firefox
+
+Dossier common:
+
+Le js et le css que l'on insère dans les deux extensions.
+
 ## Outils de développement d'extension firefox
 
 Il faut downloader nodejs et jpm. Ensuite, c'est facile.

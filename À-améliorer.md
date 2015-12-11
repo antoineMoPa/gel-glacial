@@ -1,4 +1,6 @@
-# frames
+# Trucs qui seraient à améliorer sur le site
+
+## Frames
 
 Il faut faire un design qui enlève le recours aux frames, une pratique qui n'est plus adéquate dans le web depuis plusieurs années.
 
@@ -7,7 +9,7 @@ Raisons:
 * Les frames offre un rendu affreux sur mobile (presque impossible de rendre le site «responsive»)
 *
 
-# Trop de requêtes
+## Trop de requêtes
 
 53 fichiers (.js) sont chargés en même temps dans la grille de note, pour un total de moins d'un Mb.
 

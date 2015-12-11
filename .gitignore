@@ -23,7 +23,6 @@ tramp
 /elpa/
 
 # Fichiers crées automatiquement
-chrome/main.js
-firefox/data/main.js
 chrome/style.css
-firefox/data/style.css
+chrome/main.js
+firefox/data/

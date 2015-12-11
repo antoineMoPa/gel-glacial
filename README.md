@@ -14,6 +14,12 @@ Dossier common:
 
 Le js et le css que l'on insère dans les deux extensions.
 
+## Développer pour Chrome/Chromium
+
+Allez voir [ici](https://developer.chrome.com/extensions/getstarted), dans la section intitulée «load the extension».
+
+Faites «reload» dans le gestionnaire d'extensions lorsque vous faites des changements.
+
 ## Développer pour Firefox
 
 Il faut downloader nodejs et jpm. Ensuite, c'est facile.
@@ -27,6 +33,12 @@ Ensuite, on peut aller dans le dossier /firefox et rouler:
     jpm run
 
 `Jpm` part alors firefox avec l'extension activée, suffit d'aller sur notre site favori (à part Wikipédia et [Hacker news](http://news.ycombinator.com)).
+
+Il est pertinent d'installer l'extension [autoinstaller](https://addons.mozilla.org/en-US/firefox/addon/autoinstaller/) qui évite de restarter firefox et de se reconnecter à chaque fois.
+
+Suffit alors d'entrer la commande suivante pour rafraichir l'extension:
+
+    jpm post --post-url http://localhost:8888
 
 ## Building
 

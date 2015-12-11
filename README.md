@@ -2,17 +2,25 @@
 
 ## Structure de fichiers
 
-Dossier chrome:
+**NOTE:** Avant de coder, il faut savoir que les fichiers dans le dossier `common/` sont faits pour être placés automatiquement dans le répertoire `firefox/` et `chrome/`.
+
+Sous linux, il suffit de faire `make`, car un makefile est présent pour faire exactement ça. Sous windows, vous pouvez toujours copier/coder manuellement et rammener ça dans common après.
+
+### Dossier common:
+
+Le js et le css que l'on insère dans les deux extensions.
+
+### Dossier chrome:
 
 Tout ce qui est propre à chrome
 
-Dossier firefox:
+Les fichiers du dossier `common/` sont copiés ici même.
 
-Tout ce qui est propre à firefox
+### Dossier firefox:
 
-Dossier common:
+Tout ce qui est propre à firefox. 
 
-Le js et le css que l'on insère dans les deux extensions.
+Les fichiers du dossier `common/` sont copiés dans le sous dossier `data/`.
 
 ## Développer pour Chrome/Chromium
 
@@ -40,6 +48,8 @@ Suffit alors d'entrer la commande suivante pour rafraichir l'extension:
 
     jpm post --post-url http://localhost:8888
 
+# Workflow suggéré
+
 ## Building
 
 Le Makefile permet de copier les fichiers qui sont communs à la version firefox et chrome dans les bon répertoires.
@@ -48,7 +58,14 @@ Pour builder (sous linux/quelquechose qui a bash)
 
     make build
 
+## Test
+
+Tester dans chrome et firefox, les instructions sont plus haut.
+
+
 ## TODO
+
+Il y a une s***load de possibilités!
 
 * Un bouton pour avoir les notes par rapport au pourcentage déjà évalué
 * Une autre version du tableau

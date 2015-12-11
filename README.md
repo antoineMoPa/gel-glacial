@@ -14,9 +14,19 @@ Dossier common:
 
 Le js et le css que l'on insère dans les deux extensions.
 
-## Outils de développement d'extension firefox
+## Développer pour Firefox
 
 Il faut downloader nodejs et jpm. Ensuite, c'est facile.
+
+Pour savoir comment installer jpm:
+
+    https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/jpm
+
+Ensuite, on peut aller dans le dossier /firefox et rouler:
+
+    jpm run
+
+`Jpm` part alors firefox avec l'extension activée, suffit d'aller sur notre site favori (à part Wikipédia et [Hacker news](http://news.ycombinator.com)).
 
 ## Building
 

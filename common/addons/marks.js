@@ -1,6 +1,10 @@
-var data = get_data();
+var data;
 
 function addon_marks(){
+	//gather all important data
+	data = get_data();
+	console.log(data);
+
 	//Create the addon div
 	var div = document.createElement("div");
 	div.classList.add("gel-glacial-bar");
@@ -20,7 +24,6 @@ function addon_marks(){
 
 //TODO translation
 function show_percent_mark(){
-	
 	//Change marks in the grid
 	var table_rows = document.querySelectorAll(".dojoxGridMasterView .dojoxGridRow");
 	for(var i = 0; i < data.rows.length; i++){
@@ -40,14 +43,14 @@ function show_percent_mark(){
 function set_percent_mark_cell_value(mark, table_row, table_cell_id){
 	if(mark != null && mark.mark != null && mark.weight != null){
 		var value = (mark.mark / mark.weight * 100).toFixed(1);
-		set_cell_value(value + "%", table_row, table_cell_id);
+		set_cell_value(value, table_row, table_cell_id);
 	} else {
 		set_cell_value("", table_row, table_cell_id);
 	}
 }
 
 function set_cell_value(value, table_row, table_cell_id){
-	table_row[table_cell_id].innerHTML = "<span style='font-size:8px;'>"+ value +"</span>";
+	table_row[table_cell_id].innerHTML = value;
 };
 
 function get_data(){
@@ -59,25 +62,31 @@ function get_data(){
 	script.innerHTML += "document.body.setAttribute('data-dataToolTip',JSON.stringify(dataToolTip));";
 	document.body.appendChild(script);
 	
-	//Now we can acces it
+	//Now we can acces them
 	var info = JSON.parse(JSON.parse(document.body.getAttribute("data-info")));
 	var dataToolTip = JSON.parse(document.body.getAttribute("data-dataToolTip"));
+	
 	var raw_data = JSON.parse(dataToolTip);
 	var data = {
-		"header" : [],
-		"rows" : []
+		"layout" : {
+			"prefixes" : [],
+			"groups" : {}
+		},
+		"rows" : [],
 	};
 	
+	//rows
 	raw_data.forEach(function(row, index){
 		var info_row = info[index];
 		
 		// if(index == raw_data.length){
-			
+			//TODO last row is kinda weird (1.5 row)
 		// } else {
 			var new_row = {
 				"title" : info_row.controle[0],
 				"cells" : [],
 				"total" : null,
+				"evaluation_type" : info_row.ie[0],
 			};
 			
 			//construct each cells (obj if there is a mark, null else)
@@ -93,6 +102,48 @@ function get_data(){
 		// }
 	});
 	
+	//layout
+	//We cant access to the header layout directly
+	//So find all divs of the header and rebuild information
+	var $cells = $('div[dojoattachpoint="headerContentNode"]').find($('div'));
+	
+	//filter data [prefixes - sizes - titles]
+	var grp_size = 0;
+	var titles = [];
+	var titles_size = [];
+	$cells.each(function(index){
+		var text = $(this).html();
+		
+		if(index < 3){
+			//3 first cells are for prefix
+			data.layout.prefixes.push(text);
+		} else if(!isNaN(text)){
+			//gather the size of each mark's group
+			var id = Number(text);
+			if(id == 1 && grp_size != 0){
+				//append to tittles_size
+				titles_size.push(grp_size);
+			}
+			
+			grp_size = id;
+		} else {
+			//gather each title
+			
+			if(grp_size != 0){
+				//the last groups size is not append, now it is
+				titles_size.push(grp_size);
+				grp_size = 0;
+			}
+			
+			titles.push(text);
+		}
+	})
+	
+	//rebuild for data.layout
+	titles.forEach(function(title, index){
+		data.layout.groups[title] = titles_size[index];
+	})
+
 	return data;
 }
 

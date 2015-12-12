@@ -1,6 +1,3 @@
-/* global ] */
-/* global [ */
-/* global [ */
 function addon_marks(){
 	//Create the addon div
 	var div = document.createElement("div");
@@ -49,15 +46,19 @@ function convert_marks_in_percent(){
 		//TÉ column
 		test_and_set_cell_value(data[i], "tee", row, 2);
 	}
+	
+	//TODO change mark at last row to substract missing marks
 }
 
 function test_and_set_cell_value(data_row, data_id, table_row, table_cell_id){	
 	if(typeof(data_row[data_id]) == "object"){
 		var mark_obj = data_row[data_id];
 		
+		//if possible convert in number
 		var pond = (!isNaN(mark_obj.ponderation)) ? Number(mark_obj.ponderation) : null;
 		var mark = (!isNaN(mark_obj.note)) ? Number(mark_obj.note) : null;
 		
+		//if everything is right then we set the cell value
 		if(mark != null && pond != null){
 			var percent = (mark / pond * 100).toFixed(1);
 			table_row[table_cell_id].innerHTML = "<span style='font-size:8px;'>"+ percent +"%</span>";

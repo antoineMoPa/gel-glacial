@@ -3,7 +3,7 @@ var addons = [];
 function firefox_load_addons(){
 	//TODO need to find all addons in the addons folder and load them
 	addons.push({
-		"regex_path" : "*.usherbrooke.ca",
+		"regex_path" : "*.usherbrooke.ca",//these fields should be in the addon file and more modular (lib)
 		"addon_path" : "./addons/marks.js",
 		"style_path" : "./style.css",
 	});
@@ -17,7 +17,7 @@ function firefox_exec_addons(){
 	addons.forEach(function(addon){
 		pageMod.PageMod({
 			"include" : addon.regex_path,
-			"contentScriptFile" : addon.addon_path,
+			"contentScriptFile" : ["./lib/external/jquery-2.1.4.min.js",addon.addon_path],
 			"contentStyleFile" : addon.style_path,
 			"onAttach" : function(worker){
 				worker.port.emit("exec");

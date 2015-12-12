@@ -26,3 +26,6 @@ tramp
 chrome/style.css
 chrome/main.js
 firefox/data/
+chrome/icon-*
+chrome/lib
+chrome/addons

@@ -1,33 +1,57 @@
+var addons = [];
 
-firefox_init_button();
-firefox_init_scripts();
-e
-function firefox_init_scripts(){
-    // log level
-    let sp = require('sdk/simple-prefs');
-    sp.prefs['sdk.console.logLevel'] = 'all';
-    
-    
-    var pageMod = require("sdk/page-mod");
-    
-    pageMod.PageMod({
-        include: "*",
-        contentScriptFile: "./main.js",
-        contentStyleFile: "./style.css"
-    });
+function firefox_load_addons(){
+	//TODO need to find all addons in the addons folder and load them
+	addons.push({
+		// "regex_path" : /notesEtu\.php$/,
+		// "regex_path" : "^www.gel.usherbrooke.ca",//TODO need the right filter for the page... I dont know how todo ?
+		"regex_path" : "*",
+		"addon_path" : "./addons/marks.js",
+		"style_path" : "./style.css",
+	});
+}
+
+function firefox_exec_addons(){
+	//Set listener to a url and execute the addon when matched
+	var pageMod = require("sdk/page-mod");
+	
+	//Construct all addons mod
+	addons.forEach(function(addon){
+		pageMod.PageMod({
+			"include" : addon.regex_path,
+			"contentScriptFile" : addon.addon_path,
+			"contentStyleFile" : addon.style_path,
+			"onAttach" : function(worker){
+				worker.port.emit("exec");
+			}
+		})
+	})
+}
+
+function firefox_init_scripts(){	
+	var sp = require('sdk/simple-prefs');
+	sp.prefs['sdk.console.logLevel'] = 'all';
+	
+	firefox_load_addons();
+	firefox_exec_addons();
 }
 
 function firefox_init_button(){
-    var buttons = require('sdk/ui/button/action');
-    var tabs = require("sdk/tabs");
-    
-    var button = buttons.ActionButton({
-        id: "gel",
-        label: "Gel USherbrooke",
-        icon: {
-            "16": "./icon-16.png",
-            "32": "./icon-32.png",
-            "64": "./icon-64.png"
-        }        
-    });
+	var buttons = require('sdk/ui/button/action');
+	// var tabs = require("sdk/tabs");
+	
+	//Create the toolbar button
+	var button = buttons.ActionButton({
+		"id" : "gel",
+		"label" : "Gel USherbrooke",
+		"icon" : {
+			"16": "./icon-16.png",
+			"32": "./icon-32.png",
+			"64": "./icon-64.png"
+		}
+	});
 }
+
+//exec the code
+firefox_init_button();
+firefox_init_scripts();

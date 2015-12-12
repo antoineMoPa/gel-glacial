@@ -1,51 +1,23 @@
-
-/* 
-   Selon des regex qui examinent la page principale en cours,
-   on va exécuter différentes fonctions:
-*/
-var listeners = [
-    {
-        path_regex: /notesEtu\.php$/,
-        callback: function(){
-            // On défini ça ailleurs pour alléger
-            addons_notes_etu();
-        }
-    }
-];
-
-listen_page();
-
-function listen_page(){
-    var path = window.location.pathname;
-    match_path(path);
-    function match_path(path){
-        for(var l in listeners){
-            var listener = listeners[l];
-            if(listener.path_regex.test(path)){
-                listener.callback();
-            }
-        }
-    }
+function addon_marks(){
+	//Create the addon div
+	var div = document.createElement("div");
+	div.classList.add("gel-glacial-bar");
+	
+	//Create the button for percent convertion
+	var button = document.createElement("button");
+	button.innerHTML = "Convertir en %"
+	button.classList.add("gel-glacial");
+	
+	//Set the callback of the button
+	button.onclick = convert_mark_to_percent;
+	
+	//update the doccument
+	div.appendChild(button);
+	document.body.insertBefore(div,document.body.children[0]);
 }
 
-function addons_notes_etu(){
-    /*
-      On crée la bar de gel-glacial
-    */
-    var bar = document.createElement("div");
-    bar.classList.add("gel-glacial-bar");
-    
-    var button = document.createElement("button");
-    button.innerHTML = "Convertir en %"
-    button.classList.add("gel-glacial");
-    // On attache l'évènement:
-    button.onclick = convertir_notes_etu_en_pourcentage;
-    bar.appendChild(button);
-    document.body.insertBefore(bar,document.body.children[0]);
-
-}
-
-function convertir_notes_etu_en_pourcentage(){
+//TODO translation
+function convert_mark_to_percent(){
     /* 
        On va chercher les données 
        Puisqu'on peut pas avoir directement accès aux variables 
@@ -55,10 +27,8 @@ function convertir_notes_etu_en_pourcentage(){
     */
     var script = document.createElement("script");
     script.innerHTML = "";
-    script.innerHTML +=
-    "document.body.setAttribute('data-datagrille',JSON.stringify(dataGrille));";
-    script.innerHTML +=
-    "document.body.setAttribute('data-datatooltip',JSON.stringify(dataToolTip));";
+    script.innerHTML += "document.body.setAttribute('data-datagrille',JSON.stringify(dataGrille));";
+    script.innerHTML += "document.body.setAttribute('data-datatooltip',JSON.stringify(dataToolTip));";
     document.body.appendChild(script);
     
     /*
@@ -67,6 +37,7 @@ function convertir_notes_etu_en_pourcentage(){
     */
     var dataGrille = JSON.parse(document.body.getAttribute("data-datagrille"));
     var dataToolTip = JSON.parse(document.body.getAttribute("data-datatooltip"));
+
     /*
       JSON.stringify a aussi encodé les sous-variables...
      */
@@ -91,3 +62,14 @@ function convertir_notes_etu_en_pourcentage(){
         }
     }
 }
+
+self.port.on("exec", function(){
+    //PATCH, need to filter the adress in index.js
+	var path = window.location.pathname;
+	var regex = /notesEtu\.php$/;
+	
+	//exec listeners base on there regex
+	if(regex.test(path)){
+		addon_marks();
+	}
+})

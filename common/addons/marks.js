@@ -1,3 +1,5 @@
+var data = get_data();
+
 function addon_marks(){
 	//Create the addon div
 	var div = document.createElement("div");
@@ -9,7 +11,7 @@ function addon_marks(){
 	button.classList.add("gel-glacial");
 	
 	//Set the callback of the button
-	button.onclick = convert_marks_in_percent;
+	button.onclick = show_percent_mark;
 	
 	//update the doccument
 	div.appendChild(button);
@@ -17,54 +19,116 @@ function addon_marks(){
 }
 
 //TODO translation
-function convert_marks_in_percent(){	
-	//There is 1 variable needed in the notesEtu.php file
-	//dataToolTip : contain the marks info
+function show_percent_mark(){
+	
+	//Change marks in the grid
+	var table_rows = document.querySelectorAll(".dojoxGridMasterView .dojoxGridRow");
+	for(var i = 0; i < data.rows.length; i++){
+		var row = table_rows[i].querySelectorAll("td.dojoxGridCell");
+		
+		//Single marks
+		for(var j = 0; j < data.rows[i].cells.length; j++){
+			set_percent_mark_cell_value(data.rows[i].cells[j], row, j+3);
+		}
+		//TÉ column
+		set_percent_mark_cell_value(data.rows[i].total, row, 2);
+	}
+	
+	//TODO change mark at last row to substract missing marks' weight
+}
+
+function set_percent_mark_cell_value(mark, table_row, table_cell_id){
+	if(mark != null && mark.mark != null && mark.weight != null){
+		var value = (mark.mark / mark.weight * 100).toFixed(1);
+		set_cell_value(value + "%", table_row, table_cell_id);
+	} else {
+		set_cell_value("", table_row, table_cell_id);
+	}
+}
+
+function set_cell_value(value, table_row, table_cell_id){
+	table_row[table_cell_id].innerHTML = "<span style='font-size:8px;'>"+ value +"</span>";
+};
+
+function get_data(){
+	//There are variables needed in the notesEtu.php file
 	//we can't acces it here so we need to set it as a body attribute and capture it later
 	var script = document.createElement("script");
 	script.innerHTML = "";
+	script.innerHTML += "document.body.setAttribute('data-info',JSON.stringify(data));";
 	script.innerHTML += "document.body.setAttribute('data-dataToolTip',JSON.stringify(dataToolTip));";
 	document.body.appendChild(script);
 	
 	//Now we can acces it
+	var info = JSON.parse(JSON.parse(document.body.getAttribute("data-info")));
 	var dataToolTip = JSON.parse(document.body.getAttribute("data-dataToolTip"));
-	var data = JSON.parse(dataToolTip);
+	var raw_data = JSON.parse(dataToolTip);
+	var data = {
+		"header" : [],
+		"rows" : []
+	};
 	
-	//Change marks in the grid
-	var table_rows = document.querySelectorAll(".dojoxGridMasterView .dojoxGridRow");
-	for(var i = 0; i < data.length; i++){
-		var row = table_rows[i].querySelectorAll("td.dojoxGridCell");
+	raw_data.forEach(function(row, index){
+		var info_row = info[index];
 		
-		//Single marks
-		for(var j = 3; j < row.length; j++){
-			// Grid elements are offset by 3 from the real td elements
-			var _j = j-3;
+		// if(index == raw_data.length){
 			
-			test_and_set_cell_value(data[i], _j, row, j);
-		}
+		// } else {
+			var new_row = {
+				"title" : info_row.controle[0],
+				"cells" : [],
+				"total" : null,
+			};
+			
+			//construct each cells (obj if there is a mark, null else)
+			Object.keys(row).forEach(function(key){
+				if(!isNaN(key)){
+					new_row.cells.push(build_mark_obj(row[key]));
+				} else if(key == "tee") {
+					new_row.total = build_mark_obj(row[key])
+				}
+			})
 
-		//TÉ column
-		test_and_set_cell_value(data[i], "tee", row, 2);
-	}
+			data.rows.push(new_row);
+		// }
+	});
 	
-	//TODO change mark at last row to substract missing marks
+	return data;
 }
 
-function test_and_set_cell_value(data_row, data_id, table_row, table_cell_id){	
-	if(typeof(data_row[data_id]) == "object"){
-		var mark_obj = data_row[data_id];
+function build_mark_obj(obj){
+	//if there cell is fill (no "")
+	if(typeof(obj) == "object"){
+		//convert everything in number if possible
+		var mark = (!isNaN(obj.note)) ? Number(obj.note) : null;
+		var weight = (!isNaN(obj.ponderation)) ? Number(obj.ponderation) : null;
+		var average = (!isNaN(obj.moyenne)) ? Number(obj.moyenne) : null;
+		var sd = (!isNaN(obj.ecartType)) ? Number(obj.ecartType) : null;
 		
-		//if possible convert in number
-		var pond = (!isNaN(mark_obj.ponderation)) ? Number(mark_obj.ponderation) : null;
-		var mark = (!isNaN(mark_obj.note)) ? Number(mark_obj.note) : null;
+		var mark_obj = {};
 		
-		//if everything is right then we set the cell value
-		if(mark != null && pond != null){
-			var percent = (mark / pond * 100).toFixed(1);
-			table_row[table_cell_id].innerHTML = "<span style='font-size:8px;'>"+ percent +"%</span>";
+		if(mark == null && weight == null && average == null && sd == null){
+			return null;
 		}
+		if(mark != null){
+			mark_obj.mark = mark;
+		}
+		if(weight != null){
+			mark_obj.weight = weight;
+		}
+		if(average != null){
+			mark_obj.average = average;
+		}
+		if(sd != null){
+			mark_obj.sd = sd;
+		}
+		
+		return mark_obj;
 	}
-};
+	
+	//if something is wrong
+	return null;
+}
 
 self.port.on("exec", function(){
 	// filter the page

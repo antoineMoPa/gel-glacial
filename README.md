@@ -46,7 +46,9 @@ Il est pertinent d'installer l'extension [autoinstaller](https://addons.mozilla.
 
 Suffit alors d'entrer la commande suivante pour rafraichir l'extension:
 
-    jpm post --post-url http://localhost:8888
+    jpm watchpost --post-url http://localhost:8888
+
+Ainsi lorsqu'un changement est fait dans le dossier de firefox, l'extension va actualisé dans firefox. (ne marche pas dans le dossier commun)
 
 # Workflow suggéré
 

@@ -1,8 +1,7 @@
 build:
-	cp common/main.js chrome/
-	cp common/main.js firefox/data/
-	cp common/style.css chrome/
-	cp common/style.css firefox/data/
+	# cp -r common/. chrome/; #not in developpement for now
+	cp -r common/. firefox/data/;
 
-	cd firefox; jpm post --post-url http://localhost:8888
+	#install https://addons.mozilla.org/de/firefox/addon/autoinstaller/ for firefox
+	cd firefox; jpm watchpost --post-url http://localhost:8888 
 

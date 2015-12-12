@@ -3,9 +3,7 @@ var addons = [];
 function firefox_load_addons(){
 	//TODO need to find all addons in the addons folder and load them
 	addons.push({
-		// "regex_path" : /notesEtu\.php$/,
-		// "regex_path" : "^www.gel.usherbrooke.ca",//TODO need the right filter for the page... I dont know how todo ?
-		"regex_path" : "*",
+		"regex_path" : "*.usherbrooke.ca",//these fields should be in the addon file and more modular (lib)
 		"addon_path" : "./addons/marks.js",
 		"style_path" : "./style.css",
 	});
@@ -19,7 +17,7 @@ function firefox_exec_addons(){
 	addons.forEach(function(addon){
 		pageMod.PageMod({
 			"include" : addon.regex_path,
-			"contentScriptFile" : addon.addon_path,
+			"contentScriptFile" : ["./lib/external/jquery-2.1.4.min.js",addon.addon_path],
 			"contentStyleFile" : addon.style_path,
 			"onAttach" : function(worker){
 				worker.port.emit("exec");
@@ -30,7 +28,7 @@ function firefox_exec_addons(){
 
 function firefox_init_scripts(){	
 	var sp = require('sdk/simple-prefs');
-	sp.prefs['sdk.console.logLevel'] = 'all';
+	sp.prefs['sdk.console.logLevel'] = 'all'; //now we can use console.log in pagemod scripts
 	
 	firefox_load_addons();
 	firefox_exec_addons();

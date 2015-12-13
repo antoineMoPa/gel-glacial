@@ -7,12 +7,18 @@ function firefox_load_addons(){
 		"addon_path" : "./addons/marks.js",
 		"style_path" : "./style.css",
 	});
+
+	addons.push({
+		"regex_path" : "*.usherbrooke.ca",//these fields should be in the addon file and more modular (lib)
+		"addon_path" : "./addons/iframe.js",
+		"style_path" : "./style.css",
+	});
 }
 
 function firefox_exec_addons(){
 	//Set listener to a url and execute the addon when matched
 	var pageMod = require("sdk/page-mod");
-	
+
 	//Construct all addons mod
 	addons.forEach(function(addon){
 		pageMod.PageMod({
@@ -26,10 +32,10 @@ function firefox_exec_addons(){
 	})
 }
 
-function firefox_init_scripts(){	
+function firefox_init_scripts(){
 	var sp = require('sdk/simple-prefs');
 	sp.prefs['sdk.console.logLevel'] = 'all'; //now we can use console.log in pagemod scripts
-	
+
 	firefox_load_addons();
 	firefox_exec_addons();
 }
@@ -37,7 +43,7 @@ function firefox_init_scripts(){
 function firefox_init_button(){
 	var buttons = require('sdk/ui/button/action');
 	// var tabs = require("sdk/tabs");
-	
+
 	//Create the toolbar button
 	var button = buttons.ActionButton({
 		"id" : "gel",

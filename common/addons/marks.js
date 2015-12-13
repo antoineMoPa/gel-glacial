@@ -180,15 +180,8 @@ function build_mark_obj(obj){
 	return null;
 }
 
-<<<<<<< HEAD
+
 function exec(){
-=======
-self.port.on("exec", function(){
-    //PATCH, need to filter the adress in index.js
-<<<<<<< HEAD
->>>>>>> refs/remotes/antoineMoPa/master
-=======
->>>>>>> refs/remotes/antoineMoPa/master
 	var path = window.location.pathname;
 	var regex = /notesEtu\.php$/;
 	

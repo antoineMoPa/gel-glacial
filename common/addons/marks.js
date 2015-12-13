@@ -180,7 +180,6 @@ function build_mark_obj(obj){
 	return null;
 }
 
-
 function exec(){
 	var path = window.location.pathname;
 	var regex = /notesEtu\.php$/;

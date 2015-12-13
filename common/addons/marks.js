@@ -3,8 +3,7 @@ var data;
 function addon_marks(){
 	//gather all important data
 	data = get_data();
-	console.log(data);
-
+	
 	//Create the addon div
 	var div = document.createElement("div");
 	div.classList.add("gel-glacial-bar");
@@ -181,8 +180,12 @@ function build_mark_obj(obj){
 	return null;
 }
 
+<<<<<<< HEAD
+function exec(){
+=======
 self.port.on("exec", function(){
-	// filter the page
+    //PATCH, need to filter the adress in index.js
+>>>>>>> refs/remotes/antoineMoPa/master
 	var path = window.location.pathname;
 	var regex = /notesEtu\.php$/;
 	
@@ -190,4 +193,5 @@ self.port.on("exec", function(){
 	if(regex.test(path)){
 		addon_marks();
 	}
-})
+}
+exec();

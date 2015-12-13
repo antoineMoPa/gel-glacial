@@ -1,42 +1,36 @@
-var addons = [];
 
-function firefox_load_addons(){
-	//TODO need to find all addons in the addons folder and load them
-	addons.push({
-		"regex_path" : "*.usherbrooke.ca",//these fields should be in the addon file and more modular (lib)
-		"addon_path" : "./addons/marks.js",
-		"style_path" : "./style.css",
-	});
-}
-
-function firefox_exec_addons(){
-	//Set listener to a url and execute the addon when matched
-	var pageMod = require("sdk/page-mod");
+var Application = function(){
+	this.config_log();
 	
-	//Construct all addons mod
-	addons.forEach(function(addon){
-		pageMod.PageMod({
-			"include" : addon.regex_path,
-			"contentScriptFile" : ["./lib/external/jquery-2.1.4.min.js",addon.addon_path],
-			"contentStyleFile" : addon.style_path,
-			"onAttach" : function(worker){
-				worker.port.emit("exec");
-			}
-		})
-	})
+	this.Globals = {
+		"Metadata" : {},
+		"Libraries"	: {},
+	};
+	this.load_globals();
+	
+	this.create_toolbar_ui();
+	this.start_addons();
 }
 
-function firefox_init_scripts(){	
+Application.prototype.config_log = function(){
+	//config console.log
 	var sp = require('sdk/simple-prefs');
-	sp.prefs['sdk.console.logLevel'] = 'all'; //now we can use console.log in pagemod scripts
-	
-	firefox_load_addons();
-	firefox_exec_addons();
+	sp.prefs['sdk.console.logLevel'] = 'all';
 }
 
-function firefox_init_button(){
+Application.prototype.load_globals = function(){
+	//init this.Globals
+	
+	//TODO load all metadata of the folder
+	//this.Globals.Metadata[file_name] = require("./metadata/" + file_name);
+	this.Globals.Metadata.Addons = require("./metadata/Addons.js");
+	
+	//TODO load all lib of the folder
+	this.Globals.Libraries.Addons = require("./lib/Addons.js").Addons;
+}
+
+Application.prototype.create_toolbar_ui = function(){
 	var buttons = require('sdk/ui/button/action');
-	// var tabs = require("sdk/tabs");
 	
 	//Create the toolbar button
 	var button = buttons.ActionButton({
@@ -50,6 +44,10 @@ function firefox_init_button(){
 	});
 }
 
-//exec the code
-firefox_init_button();
-firefox_init_scripts();
+Application.prototype.start_addons = function(){		
+	//Start every page mod script
+	var Addons = new this.Globals.Libraries.Addons(this.Globals);
+}
+
+//start the app
+var app = new Application();

@@ -22,6 +22,10 @@ Tout ce qui est propre à firefox.
 
 Les fichiers du dossier `common/` sont copiés dans le sous dossier `data/`.
 
+### Dossier Safari:
+
+Tout ce qui est propre à Safari. 
+
 ## Développer pour Chrome/Chromium
 
 Allez voir [ici](https://developer.chrome.com/extensions/getstarted), dans la section intitulée «load the extension».
@@ -49,6 +53,16 @@ Suffit alors d'entrer la commande suivante pour rafraichir l'extension:
     jpm watchpost --post-url http://localhost:8888
 
 Ainsi lorsqu'un changement est fait dans le dossier de firefox, l'extension va actualisé dans firefox. (ne marche pas dans le dossier commun)
+
+## Développer pour Safari
+
+1 : Ajouter manuellement de la façon suivante :
+
+Safari-->développement-->Afficher extension Builder --> + --> Ajouter une extension --> Sélectionner le répertoire contenant ".safariextension" comme extension -->  contenu injecté —> script de fin —> main.js —> feuille de style —> style.css —> installer
+
+Pour coder	 : Xcode 
+
+Pour débogguer	 : L’inspecteur Web
 
 # Workflow suggéré
 

@@ -28,3 +28,6 @@ firefox/data/
 chrome/icon-*
 chrome/lib
 chrome/addons
+
+#Apple 
+*.DS_Store

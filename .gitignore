@@ -31,3 +31,6 @@ chrome/addons
 
 #Apple 
 *.DS_Store
+safari/safari.safariextension/style.css
+safari/safari.safariextension/addons
+safari/safari.safariextension/icon-*

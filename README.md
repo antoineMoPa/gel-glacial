@@ -57,7 +57,7 @@ Ainsi lorsqu'un changement est fait dans le dossier de firefox, l'extension va a
 
 ## Développer pour Safari
 
-1 : Ajouter manuellement de la façon suivante :
+Ajouter manuellement de la façon suivante :
 
 Safari-->développement-->Afficher extension Builder --> + --> Ajouter une extension --> Sélectionner le répertoire contenant ".safariextension" comme extension -->  contenu injecté —> script de fin —> main.js —> feuille de style —> style.css —> installer
 

@@ -58,7 +58,7 @@ Ainsi lorsqu'un changement est fait dans le dossier de firefox, l'extension va a
 
 Ajouter manuellement de la façon suivante :
 
-Safari —> Développement —> Afficher extension Builder —> + —> Ajouter une extension —> Sélectionner le répertoire contenant ".safariextension" comme extension —>  contenu injecté —> script de fin —> main.js —> feuille de style —> style.css —> installer
+Safari —> Développement —> Afficher extension Builder —> + —> Ajouter une extension —> Sélectionner le répertoire contenant ".safariextension" comme extension —>  contenu injecté —> script de fin —> main.js —> feuille de style —> style.css —> Installer
 
 Pour coder	 : Xcode 
 

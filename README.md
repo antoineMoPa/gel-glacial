@@ -22,6 +22,10 @@ Tout ce qui est propre à firefox.
 
 Les fichiers du dossier `common/` sont copiés dans le sous dossier `data/`.
 
+### Dossier Safari:
+
+Tout ce qui est propre à Safari. 
+
 ## Développer pour Chrome/Chromium
 
 Allez voir [ici](https://developer.chrome.com/extensions/getstarted), dans la section intitulée «load the extension».
@@ -34,11 +38,11 @@ Il faut downloader nodejs et jpm. Ensuite, c'est facile.
 
 Pour savoir comment installer jpm:
 
-    https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/jpm
+https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/jpm
 
 Ensuite, on peut aller dans le dossier /firefox et rouler:
 
-    jpm run
+jpm run
 
 `Jpm` part alors firefox avec l'extension activée, suffit d'aller sur notre site favori (à part Wikipédia et [Hacker news](http://news.ycombinator.com)).
 
@@ -46,9 +50,19 @@ Il est pertinent d'installer l'extension [autoinstaller](https://addons.mozilla.
 
 Suffit alors d'entrer la commande suivante pour rafraichir l'extension:
 
-    jpm watchpost --post-url http://localhost:8888
+jpm watchpost --post-url http://localhost:8888
 
 Ainsi lorsqu'un changement est fait dans le dossier de firefox, l'extension va actualisé dans firefox. (ne marche pas dans le dossier commun)
+
+## Développer pour Safari
+
+1 : Ajouter manuellement de la façon suivante :
+
+Safari-->développement-->Afficher extension Builder --> + --> Ajouter une extension --> Sélectionner le répertoire contenant ".safariextension" comme extension -->  contenu injecté —> script de fin —> main.js —> feuille de style —> style.css —> installer
+
+Pour coder	 : Xcode 
+
+Pour débogguer	 : L’inspecteur Web
 
 # Workflow suggéré
 
@@ -58,7 +72,7 @@ Le Makefile permet de copier les fichiers qui sont communs à la version firefox
 
 Pour builder (sous linux/quelquechose qui a bash)
 
-    make build
+make build
 
 ## Test
 

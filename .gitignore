@@ -28,3 +28,11 @@ firefox/data/
 chrome/icon-*
 chrome/lib
 chrome/addons
+
+#Apple 
+*.DS_Store
+safari/safari.safariextension/manifest.json
+safari/safari.safariextension/style.css
+safari/safari.safariextension/lib
+safari/safari.safariextension/addons
+safari/safari.safariextension/icon-*

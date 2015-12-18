@@ -2,9 +2,9 @@
 
 ## Structure de fichiers
 
-**NOTE:** Avant de coder, il faut savoir que les fichiers dans le dossier `common/` sont faits pour être placés automatiquement dans le répertoire `firefox/` et `chrome/`.
+Les fichiers dans le dossier `common/` sont faits pour être placés automatiquement dans le répertoire `firefox/`, `chrome/` et `safari/`.
 
-Sous linux, il suffit de faire `make`, car un makefile est présent pour faire exactement ça. Sous windows, vous pouvez toujours copier/coder manuellement et rammener ça dans common après.
+Sous linux, il suffit de faire `make`, car un makefile est présent pour faire exactement ça. Sous windows, vous pouvez toujours copier/coder manuellement et ramener ça dans `common/` après. Le mieux reste d'installer `make` sur votre plateforme.
 
 ### Dossier common:
 
@@ -25,6 +25,12 @@ Les fichiers du dossier `common/` sont copiés dans le sous dossier `data/`.
 ### Dossier Safari:
 
 Tout ce qui est propre à Safari. 
+
+# Notre workflow
+
+## Conventions
+
+Lire les conventions et les respecter: [conventions](conventions.md)
 
 ## Développer pour Chrome/Chromium
 
@@ -64,7 +70,15 @@ Pour coder	 : Xcode
 
 Pour débogguer	 : L’inspecteur Web
 
-# Workflow suggéré
+## Github
+
+Voici le processus pour que votre code se retrouve dans l'extension
+
+1. Discuter dans un «Issue» d'une fonctionnalité ou d'un bug
+2. S'entendre sur une manière de faire dans l'Issue
+3. Coder
+4. Faire un `git push` vers votre clone du repo sur github
+5. Faire une pull request avec une description claire qui explique le code changé et ce qu'il fait
 
 ## Building
 
@@ -77,14 +91,3 @@ Pour builder (sous linux/quelquechose qui a bash)
 ## Test
 
 Tester dans chrome et firefox, les instructions sont plus haut.
-
-
-## TODO
-
-Il y a beaucoup de possibilités!
-
-* Un bouton pour avoir les notes par rapport au pourcentage déjà évalué
-* Une autre version du tableau
-* Rendre le site beau (css)
-* Diminuer le temps de loading des pages en enlevant les 53 scripts de la grille de note
-* Plein d'autres features

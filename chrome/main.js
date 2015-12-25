@@ -5,7 +5,7 @@ function chrome_load_addons(){
 	//these fields should be in the addon file and more modular (lib)
 	addons.push({
 		"regex_path" : /.*\.usherbrooke\.ca\/.*\/notesEtu\.php/,
-		"addon_path" : "./addons/marks.js",
+		"addon_path" : ["./lib/external/jquery-2.1.4.min.js", "./addons/marks.js"],
 		"style_path" : "./style.css",
 	});
 }
@@ -17,7 +17,9 @@ function chrome_exec_addons(){
 	//Construct all addons mod
 	addons.forEach(function(addon){
 		if(addon.regex_path.test(window.location.href)){
-			inject_script(addon.addon_path);
+			addon.addon_path.forEach(function(addon_path) {
+				inject_script(addon_path);
+			});
 		}
 		/*
 		pageMod.PageMod({

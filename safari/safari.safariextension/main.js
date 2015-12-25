@@ -6,7 +6,7 @@ function safari_load_addons(){
 	addons.push({
 		"regex_path"  : /.*\.usherbrooke\.ca\/.*\/notesEtu\.php/,
 		"addon_path"  : "addons/marks.js",
-        "addon_data"  : "data_funtions.js",
+        "addon_data"  : "addons/marks_weighting.js",
         "lib_path"    : "lib/external/jquery-2.1.4.min.js",
 		"style_path"  : "style.css",
 	});

@@ -13,7 +13,7 @@
     ],
     "content_scripts": [{
         "matches": ["https://www.gel.usherbrooke.ca/*"],
-        "js": ["main.js"],
+        "js": ["metadata/Addons.js", "main.js"],
         "all_frames": true,
         "css": ["style.css"]
     }],

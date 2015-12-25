@@ -1,6 +1,6 @@
 var addons = {
 	"marks" : {
-		"contentScriptFile" : ["jquery.js", "marks.js"],
+		"contentScriptFile" : ["jquery.js", "marks.js", "marks_weighting.js"],
 		"contentStyleFile" : ["style.css"],
 	}
 }
@@ -9,6 +9,7 @@ var addons = {
 var paths = {
 	"jquery.js" : "./lib/external/jquery-2.1.4.min.js",
 	"marks.js" : "./addons/marks.js",
+	"marks_weighting.js" : "./addons/marks_weighting.js",
 	"style.css" : "./style.css",	
 }
 

@@ -5,7 +5,7 @@ function chrome_load_addons(){
 	//these fields should be in the addon file and more modular (lib)
 	addons.push({
 		"regex_path" : /.*\.usherbrooke\.ca\/.*\/notesEtu\.php/,
-		"addon_path" : ["./lib/external/jquery-2.1.4.min.js", "./addons/marks.js", "./addons/data_funtions.js"],
+		"addon_path" : ["./lib/external/jquery-2.1.4.min.js", "./addons/marks.js", "./addons/marks_weighting.js"],
 		"style_path" : "./style.css",
 	});
 }

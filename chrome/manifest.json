@@ -12,7 +12,7 @@
         "tabs"
     ],
     "content_scripts": [{
-        "matches": ["https://www.gel.usherbrooke.ca/*"],
+        "matches": ["*://www.gel.usherbrooke.ca/*"],
         "js": ["metadata/Addons.js", "main.js"],
         "all_frames": true,
         "css": ["style.css"]

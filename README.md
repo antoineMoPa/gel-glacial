@@ -60,6 +60,8 @@ Suffit alors d'entrer la commande suivante pour rafraichir l'extension:
 
 Ainsi lorsqu'un changement est fait dans le dossier de firefox, l'extension va actualisé dans firefox. (ne marche pas dans le dossier commun)
 
+Depuis Firefox 43 (Décembre 2015), il est nécessaire de désactiver `xpinstall.signatures.required` dans `about:config` pour que ceci fonctionne.
+
 ## Développer pour Safari
 
 Ajouter manuellement de la façon suivante :

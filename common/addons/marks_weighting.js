@@ -43,7 +43,7 @@ function get_all_ponderation(){
     url = url.replace("notesEtu.php", "ponderation.php");
     
     // Get all data needed from ponderation page
-    $("#ponderation_grid").load(url ,function(){
+    jQuery("#ponderation_grid").load(url ,function(){
         data_ponderation = data;
 		for (i = 0; i < data.length-1; i++) {
 			for (j = 0; j < countProperties(data[i])-1; j++) {

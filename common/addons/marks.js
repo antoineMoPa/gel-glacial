@@ -63,12 +63,10 @@ function show_original_mark(){
 	button_toggle();
 }
 
-function set_percent_mark_cell_value(mark, table_row, table_cell_id){
+function set_percent_mark_cell_value(mark, table_row, table_cell_id){	
 	if(mark != null && mark.mark != null && mark.weight != null){
-		var value = (mark.mark / mark.weight * 100).toFixed(1);
+	        var value = (mark.mark / mark.weight * 100).toFixed(1);
 		set_cell_value(value, table_row, table_cell_id);
-	} else {
-		set_cell_value("", table_row, table_cell_id);
 	}
 }
 
@@ -76,8 +74,6 @@ function set_mark_cell_value(mark, table_row, table_cell_id){
 	if(mark != null && mark.mark != null && mark.weight != null){
 		var value = (mark.mark).toFixed(1);
 		set_cell_value(value, table_row, table_cell_id);
-	} else {
-		set_cell_value("", table_row, table_cell_id);
 	}
 }
 
@@ -122,10 +118,10 @@ function get_marks_grid(){
 			};
 			
 			//construct each cells (obj if there is a mark, null else)
-			Object.keys(row).forEach(function(key){
+			Object.keys(row).forEach(function(key){	
 				if(!isNaN(key)){
 					new_row.cells.push(build_mark_obj(row[key]));
-				} else if(key == "tee") {
+				} else if(key == "tee" && row[key].moyenne != "0.0"){
 					new_row.total = build_mark_obj(row[key])
 				}
 			})
@@ -137,14 +133,14 @@ function get_marks_grid(){
 	//layout
 	//We cant access to the header layout directly
 	//So find all divs of the header and rebuild information
-	var $cells = $('div[dojoattachpoint="headerContentNode"]').find($('div'));
+	var $cells = jQuery('div[dojoattachpoint="headerContentNode"]').find(jQuery('div'));
 	
 	//filter data [prefixes - sizes - titles]
 	var grp_size = 0;
 	var titles = [];
 	var titles_size = [];
 	$cells.each(function(index){
-		var text = $(this).html();
+		var text = jQuery(this).html();
 		
 		if(index < 3){
 			//3 first cells are for prefix

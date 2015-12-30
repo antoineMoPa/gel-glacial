@@ -40,7 +40,9 @@ function show_percent_mark(){
 }
 
 function set_percent_mark_cell_value(mark, table_row, table_cell_id){
-	if(mark != null && mark.mark != null && mark.weight != null){
+	if (mark != null && mark.empty == true){
+		set_cell_value("--", table_row, table_cell_id);
+	} else if(mark != null && mark.mark != null && mark.weight != null){
 		var value = (mark.mark / mark.weight * 100).toFixed(1);
 		set_cell_value(value, table_row, table_cell_id);
 	} else {
@@ -151,15 +153,20 @@ function build_mark_obj(obj){
 	if(typeof(obj) == "object"){
 		//convert everything in number if possible
 		var mark = (!isNaN(obj.note)) ? Number(obj.note) : null;
+		
+		var empty = (obj.note == "--") ? true: false;
 		var weight = (!isNaN(obj.ponderation)) ? Number(obj.ponderation) : null;
 		var average = (!isNaN(obj.moyenne)) ? Number(obj.moyenne) : null;
 		var sd = (!isNaN(obj.ecartType)) ? Number(obj.ecartType) : null;
 		
 		var mark_obj = {};
-		
+
 		if(mark == null && weight == null && average == null && sd == null){
 			return null;
 		}
+
+		mark_obj.empty = empty;
+		
 		if(mark != null){
 			mark_obj.mark = mark;
 		}

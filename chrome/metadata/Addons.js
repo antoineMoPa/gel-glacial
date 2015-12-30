@@ -3,7 +3,7 @@ var get_addons = (function() {
 	var addons = {
 		"marks" : {
 			"regexPath" : /.*\.usherbrooke\.ca\/.*\/notesEtu\.php/,
-			"scriptFiles" : ["jquery.js", "average_fix.js", "marks.js", "marks_weighting.js"],
+			"scriptFiles" : ["jquery.js", "average_fix.js", "marks.js", "marks_weighting.js", "new_marks.js"],
 			"styleFiles" : ["style.css"]
 		}
 	}
@@ -14,6 +14,7 @@ var get_addons = (function() {
 		"marks.js" : "./addons/marks.js",
 		"marks_weighting.js" : "./addons/marks_weighting.js",
 		"average_fix.js" : "./addons/average_fix.js",
+		"new_marks.js" : "./addons/new_marks.js",
 		"style.css" : "./style.css",	
 	}
 

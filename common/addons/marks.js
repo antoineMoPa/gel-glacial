@@ -96,13 +96,12 @@ function button_toggle(){
 	}
 }
 
-function exec(){
+document.addEventListener('jQueryLoaded', function(e){
 	var path = window.location.pathname;
 	var regex = /notesEtu\.php$/;
-	
+    
 	//exec listeners base on there regex
 	if(regex.test(path)){
 		addon_marks();
 	}
-}
-exec();
+});

@@ -147,13 +147,12 @@ function countProperties(obj) {
 }
 
 // Exec
-function exec(){
-    var path = window.location.pathname;
-    var regex = /notesEtu\.php$/;
-    
-    //exec listeners base on there regex
-    if(regex.test(path)){
-        addon_ponderation();
-    }
-}
-exec();
+document.addEventListener('jQueryLoaded', function(e){
+	var path = window.location.pathname;
+	var regex = /notesEtu\.php$/;
+
+	//exec listeners base on there regex
+	if(regex.test(path)){
+		addon_ponderation();
+	}
+});

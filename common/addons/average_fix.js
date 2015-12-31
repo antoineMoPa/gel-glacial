@@ -177,13 +177,22 @@ function build_mark_obj(obj){
 	return null;
 }
 
-function exec(){
+function defer_and_notify(event) {
+    if(window.jQuery)
+        document.dispatchEvent(event);
+    else
+        setTimeout(function() { defer_and_notify(event) }, 50);
+}
+
+
+document.addEventListener('jQueryLoaded', function(e){
 	var path = window.location.pathname;
 	var regex = /notesEtu\.php$/;
-	
+
 	//exec listeners base on there regex
 	if(regex.test(path)){
 		addon_average_fix();
 	}
-}
-exec();
+});
+
+defer_and_notify(new Event('jQueryLoaded'));

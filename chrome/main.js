@@ -27,30 +27,5 @@ function chrome_init_scripts(){
 	chrome_exec_addons();
 }
 
-window.addEventListener('message', function(event){
-	if('marks' in event.data){
-		chrome.storage.local.set({'marks': event.data.marks}, function(){
-			if(typeof chrome.runtime.lastError !== 'undefined')
-				console.log("Unable to store marks");
-		});
-	}
-});
-
-chrome.storage.onChanged.addListener(function(changes) {
-	if('marks' in changes && 'oldValue' in changes.marks){
-		changes.marks.newValue.rows.forEach(function(row, row_index){
-			row.cells.forEach(function(cell, cell_index){
-				var old_cell = changes.marks.oldValue.rows[row_index].cells[cell_index];
-				if(old_cell !== cell && old_cell.mark != cell.mark){
-					window.postMessage({grid_changed:
-								{row_index: row_index,
-								 cell_index: cell_index}
-							   }, '*');
-				}
-			});
-		});
-	}
-});
-
 //exec the code
 chrome_init_scripts();

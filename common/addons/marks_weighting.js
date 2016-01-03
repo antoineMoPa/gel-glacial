@@ -42,72 +42,41 @@ function get_all_ponderation(){
     var url = window.location.href;
     url = url.replace("notesEtu.php", "ponderation.php");
     
-    // Get all data needed from ponderation page
-    $("#ponderation_grid").load(url ,function(){
-        data_ponderation = data;
-		for (i = 0; i < data.length-1; i++) {
-			for (j = 0; j < countProperties(data[i])-1; j++) {
-				if(data[i][j] != ""){
-					if(typeof dataToolTip[i][j] != 'undefined'){
-						if(typeof dataToolTip[i][j].ponderation != 'undefined'){
-							dataToolTip[i][j].ponderation = data[i][j];
-						}
-					}
+	//in browsers other than firefox, unsafeWindow becomes a reference of window
+	unsafeWindow = window;
+
+	var dataToolTip = unsafeWindow.dataToolTip;
+	// Get all data needed from ponderation page
+	jQuery.get(url, function(data){
+		var weights_div = jQuery("#ponderation_grid")
+		var weights_page = jQuery("<div/>").html(data);
+		weights_div.append(weights_page.find("#gridContainer4"));
+		weights_div.append(weights_page.find("#Loader"));
+		//the script has to be accessed using an hard coded offset
+		//since it has no attributes :(
+		var script = weights_page.find("script")[3].innerHTML;
+	
+		//each dojo widget needs a different id
+		script = script.replace("id: 'grid',", "id: 'grid2',");
+		unsafeWindow.eval(script);
+
+		data_ponderation = unsafeWindow.data;
+		for (i = 0; i < data_ponderation.length-1; i++){
+			for (j = 0; j < countProperties(data_ponderation[i])-1; j++){
+				if(data_ponderation[i][j] != ""
+				   && typeof dataToolTip[i][j] != 'undefined'
+				   && typeof dataToolTip[i][j].ponderation != 'undefined'){
+					dataToolTip[i][j].ponderation = data_ponderation[i][j];
 				}
 			}
-		};
-        // Add listener when loading is complet
-        observe_loading();
-    });
-}
+		}
+		unsafeWindow.dataToolTip = dataToolTip;
 
-// Observer Loading Page 0_0
-function observe_loading(){
-
-    // Observe when page will be all loaded (necessary)
-    var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutationRecord) {
-        
-            // At this point some cell's data remaining
-            observe_cells();
-            //console.log('Page ponderation finish loading');
-        });
-    });
-    
-    // Apply observer on target
-    document.getElementById('Loader').setAttribute('style','visibility: visible;');
-    var target = document.getElementById('Loader');
-    observer.observe(target, { attributes : true, attributeFilter : ['style'] });
-}
-
-// Observe Grid Finish Loading 0_0
-function observe_cells(){
-
-    // Observe when page will be all loaded (necessary)
-    var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutationRecord) {
-            // Keep only grid
-            keep_grid_only();
-            // Reset btn
-            btn_ponderation.onclick = show_hide_ponderation;
-            btn_ponderation.disabled = false;
-            // Hide grid
-            show_hide_ponderation();
-            //console.log('Grid ponderation finish loading');
-        });
-    });
-    
-    // Apply target
-    jQuery('#gridContainer4').find('.dojoxGridMasterView').attr('style','height: 0px;');
-    jQuery('#gridContainer4').find('.dojoxGridMasterView').attr('id','gridPonderation');
-    var target = document.getElementById('gridPonderation');
-    observer.observe(target, { attributes : true, attributeFilter : ['style'] });
-}
-
-// Keep grid only from loaded page
-function keep_grid_only(){
-    var grid_only = jQuery('#gridContainer4');
-    jQuery('#ponderation_grid').html(grid_only.html());
+		btn_ponderation.onclick = show_hide_ponderation;
+		btn_ponderation.disabled = false;
+		// Hide grid
+		show_hide_ponderation();
+	});
 }
 
 // Create Ponderation Grid

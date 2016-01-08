@@ -196,4 +196,6 @@ function exec(){
 		addon_marks();
 	}
 }
-exec();
+postpone('jQueryLoaded', function(){
+	return window.jQuery
+}, exec);

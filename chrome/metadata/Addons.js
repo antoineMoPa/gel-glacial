@@ -3,7 +3,7 @@ var get_addons = (function() {
 	var addons = {
 		"marks" : {
 			"regexPath" : /.*\.usherbrooke\.ca\/.*\/notesEtu\.php/,
-			"scriptFiles" : ["jquery.js", "marks.js", "marks_weighting.js"],
+			"scriptFiles" : ["jquery.js", "dependence_postponing.js", "marks.js", "marks_weighting.js"],
 			"styleFiles" : ["style.css"]
 		}
 	}
@@ -13,6 +13,7 @@ var get_addons = (function() {
 		"jquery.js" : "./lib/external/jquery-2.1.4.min.js",
 		"marks.js" : "./addons/marks.js",
 		"marks_weighting.js" : "./addons/marks_weighting.js",
+		"dependence_postponing.js" : "./lib/dependence_postponing.js",
 		"style.css" : "./style.css",	
 	}
 

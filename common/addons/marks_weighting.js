@@ -11,44 +11,44 @@ function addon_ponderation(){
 	create_div_pond_grid();
 
 	// Btn : Get All Ponderation
-    btn_ponderation= document.createElement("button");
-    btn_ponderation.id = "btn_ponderation";
-    btn_ponderation.innerHTML = "Affiche toutes les ponderations";
-    btn_ponderation.classList.add("gel-glacial");
-    btn_ponderation.onclick = get_all_ponderation;
+	btn_ponderation= document.createElement("button");
+	btn_ponderation.id = "btn_ponderation";
+	btn_ponderation.innerHTML = "Affiche toutes les ponderations";
+	btn_ponderation.classList.add("gel-glacial");
+	btn_ponderation.onclick = get_all_ponderation;
 
 	// Btn div
-    var div_btn = document.createElement("div");
+	var div_btn = document.createElement("div");
 	div_btn.id = "btn_ponderation";
-    div_btn.classList.add("gel-glacial-bar");
+	div_btn.classList.add("gel-glacial-bar");
 	div_btn.appendChild(btn_ponderation);
 	
 	// Insert btns group
-    document.body.insertBefore(div_btn,document.body.children[0]);
+	document.body.insertBefore(div_btn,document.body.children[0]);
 }
 
 // Get Ponderation datas from url ponderation
 function get_all_ponderation(){
 
-    // Change Note's div id
-    document.getElementById("gridContainer4").id = "gridNotes";
-    document.getElementById("Loader").id = "LoaderNotes";
+	// Change Note's div id
+	document.getElementById("gridContainer4").id = "gridNotes";
+	document.getElementById("Loader").id = "LoaderNotes";
     
-    // Disable btn for loading
-    btn_ponderation.disabled = true;
-    btn_ponderation.innerHTML = "Telechargement...";
-    
-    // Set url to get data ponderation
-    var url = window.location.href;
-    url = url.replace("notesEtu.php", "ponderation.php");
-    
+	// Disable btn for loading
+	btn_ponderation.disabled = true;
+	btn_ponderation.innerHTML = "Telechargement...";
+	
+	// Set url to get data ponderation
+	var url = window.location.href;
+	url = url.replace("notesEtu.php", "ponderation.php");
+	
 	//in browsers other than firefox, unsafeWindow becomes a reference of window
 	unsafeWindow = window;
 
 	var dataToolTip = unsafeWindow.dataToolTip;
 	// Get all data needed from ponderation page
 	jQuery.get(url, function(data){
-		var weights_div = jQuery("#ponderation_grid")
+		var weights_div = jQuery("#ponderation_grid");
 		var weights_page = jQuery("<div/>").html(data);
 		weights_div.append(weights_page.find("#gridContainer4"));
 		weights_div.append(weights_page.find("#Loader"));
@@ -90,29 +90,28 @@ function create_div_pond_grid(){
 
 // Show hide grid div && create it if not exist
 function show_hide_ponderation(){
-    var id = "ponderation_grid";
-    
-    // Show
-    if(document.getElementById(id).style.display=="block"){
-        btn_ponderation.innerHTML = "Afficher Grille des ponderations";
-        document.getElementById('ponderation_grid').setAttribute('style','display: none');
+	var id = "ponderation_grid";
+	
+	// Show
+	if(document.getElementById(id).style.display=="block"){
+		btn_ponderation.innerHTML = "Afficher Grille des ponderations";
+		document.getElementById('ponderation_grid').setAttribute('style','display: none');
 
-    //Hide
-    }else{
-        btn_ponderation.innerHTML = "Cacher grille des ponderations";
-        document.getElementById('ponderation_grid').setAttribute('style','display: block');
-    }
-    return true;
+	//Hide
+	}else{
+		btn_ponderation.innerHTML = "Cacher grille des ponderations";
+		document.getElementById('ponderation_grid').setAttribute('style','display: block');
+	}
+	return true;
 }
 
 // Count number of elements in object
 function countProperties(obj) {
-    var count = 0;
-    for(var prop in obj) {
-        if(obj.hasOwnProperty(prop))
-            ++count;
-    }
-    return count;
+	var count = 0;
+	for(var prop in obj) {
+		if(obj.hasOwnProperty(prop))
+			++count;
+	}
 }
 
 // Exec

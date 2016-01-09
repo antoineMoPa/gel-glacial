@@ -13,10 +13,10 @@ setInterval(function(){
 	Object.keys(registered_ids).forEach(function(id){
 		var entry = registered_ids[id];
 		if(entry.check()){
-			entry.callbacks.forEach(function(callback){
-				callback();
-			});
-			delete registered_ids[id];
+			var callbacks = entry.callbacks;
+			while(entry.callbacks.length != 0){
+				entry.callbacks.pop()();
+			}
 		}
 	});
 }, 100);

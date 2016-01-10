@@ -1,15 +1,11 @@
 function addon_new_marks(){
-	if(typeof marks_grid === 'undefined'){
-		//gather marks data
-		marks_grid = get_marks_grid();
-	}
-
 	check_for_new_marks();
 }
 
 function check_for_new_marks(){
-	if('marks' in localStorage){
-		var old_marks = JSON.parse(localStorage.marks);
+	//TODO watch for a visit to someone else's account
+	if(marks_grid.semester in localStorage){
+		var old_marks = JSON.parse(localStorage[marks_grid.semester]);
 		old_marks.rows = JSON.parse(old_marks.rows);
 		marks_grid.rows.forEach(function(row, row_index){
 			row.cells.forEach(function(cell, cell_index){
@@ -20,7 +16,7 @@ function check_for_new_marks(){
 			});
 		});
 	}
-	localStorage.marks = JSON.stringify(marks_grid);
+	localStorage[marks_grid.semester] = JSON.stringify(marks_grid);
 }
 
 function highlight_mark(row_index, cell_index){
@@ -38,6 +34,6 @@ function exec(){
 		addon_new_marks();
 	}
 }
-postpone('jQueryLoaded', function(){
-	return window.jQuery
+postpone('dataGathered', function(){
+	return typeof marks_grid !== 'undefined';
 }, exec);

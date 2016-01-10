@@ -8,6 +8,9 @@ function addon_average_fix(){
 }
 
 function sum_of_evaluations(){
+	var dataToolTip = unsafeWindow.dataToolTip;
+	var nbColonneCompetence = unsafeWindow.nbColonneCompetence;
+
 	var index_total_row = marks_grid.rows.length - 1;
 
 	//each competence
@@ -21,15 +24,22 @@ function sum_of_evaluations(){
 		}
 		dataToolTip[i][j].moyenne = marks_grid.rows[index_total_row].cells[j].average.toFixed(1);
 	}
+	unsafeWindow.dataToolTip = dataToolTip;
 }
 
 function sum_of_competences(){
+	var dataToolTip = unsafeWindow.dataToolTip;
+	var nbColonneCompetence = unsafeWindow.nbColonneCompetence;
+	var nbColonneAp = unsafeWindow.nbColonneAp;
+	var nbControle = unsafeWindow.nbControle;
+
 	var index_extra_total_row = nbControle + 1;
+	var end_of_totals = nbColonneCompetence + nbColonneAp;
 	var index_total_row = marks_grid.rows.length - 1;	
 
 	var index_comp = 0;
 	//each course
-	for(var j = nbColonneCompetence; j < dataToolTip[index_extra_total_row].length; j++){
+	for(var j = nbColonneCompetence; j < end_of_totals; j++){
 		var number_of_competences = marks_grid.layout.groups[Object.keys(marks_grid.layout.groups)[j - nbColonneCompetence]];
 		var index_of_next_course = index_comp + number_of_competences;
 		dataToolTip[index_extra_total_row][j].moyenne = 0;
@@ -39,6 +49,7 @@ function sum_of_competences(){
 		}
 		dataToolTip[index_extra_total_row][j].moyenne = dataToolTip[index_extra_total_row][j].moyenne.toFixed(1);
 	}
+	unsafeWindow.dataToolTip = dataToolTip;
 }
 
 function exec(){

@@ -1,6 +1,6 @@
 var addons = {
 	"marks" : {
-		"contentScriptFile" : ["jquery.js", "marks.js", "marks_weighting.js"],
+		"contentScriptFile" : ["jquery.js", "dependence_postponing.js", "marks_gathering.js", "marks.js", "marks_weighting.js", "new_marks.js", "average_fix.js"],
 		"contentStyleFile" : ["style.css"],
 	}
 }
@@ -10,6 +10,10 @@ var paths = {
 	"jquery.js" : "./lib/external/jquery-2.1.4.min.js",
 	"marks.js" : "./addons/marks.js",
 	"marks_weighting.js" : "./addons/marks_weighting.js",
+	"marks_gathering.js" : "./addons/marks_gathering.js",
+	"dependence_postponing.js" : "./lib/dependence_postponing.js",
+	"average_fix.js" : "./addons/average_fix.js",
+	"new_marks.js" : "./addons/new_marks.js",
 	"style.css" : "./style.css",	
 }
 

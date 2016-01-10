@@ -42,9 +42,6 @@ function get_all_ponderation(){
 	var url = window.location.href;
 	url = url.replace("notesEtu.php", "ponderation.php");
 	
-	//in browsers other than firefox, unsafeWindow becomes a reference of window
-	unsafeWindow = window;
-
 	var dataToolTip = unsafeWindow.dataToolTip;
 	// Get all data needed from ponderation page
 	jQuery.get(url, function(data){

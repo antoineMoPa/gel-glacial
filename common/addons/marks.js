@@ -20,11 +20,6 @@ function addon_marks(){
 
 //TODO translation
 function show_percent_mark(){
-	if(typeof marks_grid === 'undefined'){
-		//gather marks data
-		marks_grid = get_marks_grid();
-	}
-
 	//Change marks in the grid
 	var table_rows = document.querySelectorAll(".dojoxGridMasterView .dojoxGridRow");
 	for(var i = 0; i < marks_grid.rows.length; i++){

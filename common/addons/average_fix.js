@@ -29,11 +29,10 @@ function sum_of_competences(){
 
 	var index_comp = 0;
 	//each course
-	for(var j = nbColonneCompetence; j <= index_extra_total_row; j++){
+	for(var j = nbColonneCompetence; j < dataToolTip[index_extra_total_row].length; j++){
 		var number_of_competences = marks_grid.layout.groups[Object.keys(marks_grid.layout.groups)[j - nbColonneCompetence]];
 		var index_of_next_course = index_comp + number_of_competences;
 		dataToolTip[index_extra_total_row][j].moyenne = 0;
-
 		//each competence
 		for(;index_comp < index_of_next_course; index_comp++){
 			dataToolTip[index_extra_total_row][j].moyenne += Number(dataToolTip[index_total_row][index_comp].moyenne);

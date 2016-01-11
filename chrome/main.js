@@ -22,7 +22,7 @@ function inject_script(url){
 	document.body.appendChild(script);
 }
 
-function chrome_init_scripts(){	
+function chrome_init_scripts(){
 	chrome_load_addons();
 	chrome_exec_addons();
 }

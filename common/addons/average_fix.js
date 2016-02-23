@@ -52,7 +52,7 @@ function sum_of_competences(){
 	unsafeWindow.dataToolTip = dataToolTip;
 }
 
-function exec(){
+(function(){
 	var path = window.location.pathname;
 	var regex = /notesEtu\.php$/;
 	
@@ -60,7 +60,4 @@ function exec(){
 	if(regex.test(path)){
 		addon_average_fix();
 	}
-}
-postpone('dataGathered', function(){
-	return typeof marks_grid !== 'undefined';
-}, exec);
+})();

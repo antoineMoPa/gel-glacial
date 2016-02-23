@@ -121,7 +121,7 @@ function countProperties(obj) {
 }
 
 // Exec
-function exec(){
+(function(){
 	var path = window.location.pathname;
 	var regex = /notesEtu\.php$/;
 	
@@ -129,5 +129,4 @@ function exec(){
 	if(regex.test(path)){
 		addon_ponderation();
 	}
-}
-exec();
+})();

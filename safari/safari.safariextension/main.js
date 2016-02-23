@@ -5,9 +5,7 @@ function safari_load_addons(){
 	//these fields should be in the addon file and more modular (lib)
 	addons.push({
 		"regex_path"  : /.*\.usherbrooke\.ca\/.*\/notesEtu\.php/,
-		"addon_path"  : "addons/marks.js",
-        "addon_data"  : "addons/marks_weighting.js",
-        "lib_path"    : "lib/external/jquery-2.1.4.min.js",
+		"addon_path"  : ["lib/external/jquery-2.1.4.min.js", "lib/dependence_postponing.js", "addons/marks_gathering.js", "addons/marks.js", "addons/marks_weighting.js", "addons/new_marks.js", "addons/average_fix.js"],
 		"style_path"  : "style.css",
 	});
 }
@@ -15,9 +13,9 @@ function safari_load_addons(){
 function safari_exec_addons(){
 	addons.forEach(function(addon){
 		if(addon.regex_path.test(window.location.href)){
-            inject_script(addon.lib_path);
-			inject_script(addon.addon_path);
-            inject_script(addon.addon_data);
+			addon.addon_path.forEach(function(script_path) {
+				inject_script(script_path);
+			});
 		}
 	})
 }

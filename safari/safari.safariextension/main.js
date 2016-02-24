@@ -5,7 +5,7 @@ function safari_load_addons(){
 	//these fields should be in the addon file and more modular (lib)
 	addons.push({
 		"regex_path"  : /.*\.usherbrooke\.ca\/.*\/notesEtu\.php/,
-		"addon_path"  : ["marks_addon.js"],
+		"addon_path"  : ["addons/marks_addon.js"],
 		"style_path"  : "style.css",
 	});
 	addons.push({

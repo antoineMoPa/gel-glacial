@@ -21,6 +21,7 @@ function downloadZip(zipObject, zipName) {
     saveHack.download = zipName;
     var url = window.URL.createObjectURL(zipObject.generate({type:'blob'}));
     saveHack.href = url;
+    docsContainer = document.getElementById('divdocuments')
+    docsContainer.insertBefore(saveHack, docsContainer.firstChild);
     saveHack.click();
-    window.URL.revokeObjectURL(url);
 }

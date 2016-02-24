@@ -14,11 +14,11 @@
         var lnkText = 'Télécharger tout';
         var lnkLoading = 'Veuillez patienter...';
 
-        lnk.innerText = lnkText;
+        lnk.textContent = lnkText;
         lnk.href = '#';
 
         lnk.onclick = function() {
-            this.innerText = lnkLoading;
+            this.textContent = lnkLoading;
 
             var nDocsFinish = 0;
             var nDocs = docArray.length;    
@@ -30,17 +30,17 @@
 
             for (var i = 0;i < nDocs; i++) {
                 (function(x){
-                    lnk.innerText = lnkLoading + ' (0/' + nDocs + ')';
+                    lnk.textContent = lnkLoading + ' (0/' + nDocs + ')';
 
                     var currentDoc = docArray[x];
                     if (currentDoc.shortcut === true) {
                         createShortcut(zip, currentDoc.url, currentDoc.filename, currentDoc.folder);
                         nDocsFinish++;
 
-                        lnk.innerText = lnkLoading + '(' + nDocsFinish + '/' + nDocs + ')';
+                        lnk.textContent = lnkLoading + '(' + nDocsFinish + '/' + nDocs + ')';
 
                         if (nDocsFinish == nDocs) {
-                            lnk.innerText = lnkText;
+                            lnk.textContent = lnkText;
                             downloadZip(zip, ZIP_NAME);
                         }
                     } else { // get the file
@@ -54,10 +54,10 @@
                             createShortcut(zip, currentDoc.url, currentDoc.filename, currentDoc.folder);
                             nDocsFinish++;
 
-                            lnk.innerText = lnkLoading + '(' + nDocsFinish + '/' + nDocs + ')';
+                            lnk.textContent = lnkLoading + '(' + nDocsFinish + '/' + nDocs + ')';
 
                             if (nDocsFinish == nDocs) {
-                                lnk.innerText = lnkText;
+                                lnk.textContent = lnkText;
                                 downloadZip(zip, ZIP_NAME);
                             }
                         }, TIMEOUT_MS);
@@ -77,10 +77,10 @@
 
                                 nDocsFinish++;
 
-                                lnk.innerText = lnkLoading + '(' + nDocsFinish + '/' + nDocs + ')';
+                                lnk.textContent = lnkLoading + '(' + nDocsFinish + '/' + nDocs + ')';
 
                                 if (nDocsFinish == nDocs) {
-                                    lnk.innerText = lnkText;
+                                    lnk.textContent = lnkText;
                                     downloadZip(zip, ZIP_NAME);
                                 }
                             }

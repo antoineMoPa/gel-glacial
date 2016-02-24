@@ -14,7 +14,7 @@ var Docs = (function() {
         Array.from(listing).forEach(function(item){
             var links = item.getElementsByTagName('a');
             if (links.length == 0) {
-                currentSection = item.innerText.trim();
+                currentSection = item.textContent.trim();
             } else {
                 Array.from(links).forEach(function(link, index){
                     if (!link.dataset.visited) {
@@ -24,7 +24,7 @@ var Docs = (function() {
                         var lastDot = linkURL.lastIndexOf('.');
                         var hrefExt = lastDot != -1 ? linkURL.substring(lastDot) : null;
                         
-                        var currentFile = (index + 1 < 10 ? '0' : '') + (index + 1) + '_' + link.innerText.trim() + hrefExt;
+                        var currentFile = (index + 1 < 10 ? '0' : '') + (index + 1) + '_' + link.textContent.trim() + hrefExt;
                         currentFile = currentFile.replace(/\//g, '_');
                         
                         var isShortcut = lastDot < linkURL.length - 4;

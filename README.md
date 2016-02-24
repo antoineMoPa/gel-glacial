@@ -1,4 +1,38 @@
-# GEL GLACIAL
+# GLACIAL
+
+Glacial est une extension qui ajoute certaines fonctionnalités à gel.usherbrooke.ca.
+
+## Navigateurs supportés
+
+### Firefox
+
+Prendre la dernière version dans les [releases](https://github.com/antoineMoPa/glacial/releases)
+
+Fichier .xpi 
+
+Télécharger et effectuer un «drag and drop» dans n'importe quelle fenêtre firefox.
+
+### Chrome/Chromium
+
+Prendre la dernière version dans les [releases](https://github.com/antoineMoPa/glacial/releases)
+
+Fichier .crx
+
+Télécharger et effectuer un «drag and drop» dans la fenêtre «extensions» de chrome.
+
+#### Safari (via le code source)
+
+Voir les instructions pour safari plus bas dans «Développer pour Safari»
+
+## Fonctionnalités
+
+### Amélioration de la grille de notes
+* Affichage des notes en pourcentage (Il faut appuyer le bouton)
+* Surlignement en jaune des nouvelles notes
+* Affichage de toutes les pondérations dans l'infobulle<br>
+   Lorsqu'on survole les évaluations dont la note n'a pas encore été entrée.
+* Recalcul de la moyenne du groupe dans les cellules de notes finales.<br>
+   (Sans l'extension, votre note accumulée est affichée et la moyenne du groupe est affichée)
 
 ## Structure de fichiers
 

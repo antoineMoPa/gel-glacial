@@ -3,7 +3,13 @@ var get_addons = (function() {
 	var addons = {
 		"marks" : {
 			"regexPath" : /.*\.usherbrooke\.ca\/.*\/notesEtu\.php/,
-		    "scriptFiles" : ["jquery.js", "dependence_postponing.js", "marks_gathering.js", "marks.js", "marks_weighting.js", "new_marks.js", "average_fix.js"],
+			"scriptFiles" : ["marks_addon.js"],
+			"styleFiles" : ["style.css"]
+		},
+		"zip_documents" : {
+			"regexPath" : /.*\.usherbrooke\.ca\/.*\/doc.*/,
+			"scriptFiles" : ["jszip.js", "utils.js", "fetch.js",
+					 "download.js"],
 			"styleFiles" : ["style.css"]
 		}
 	}
@@ -17,7 +23,12 @@ var get_addons = (function() {
 		"marks_gathering.js" : "./addons/marks_gathering.js",
 		"average_fix.js" : "./addons/average_fix.js",
 		"new_marks.js" : "./addons/new_marks.js",
-		"style.css" : "./style.css",	
+		"jszip.js" : "./lib/external/jszip.min.js",
+		"utils.js" : "./addons/utils.js",
+		"fetch.js" : "./addons/fetch.js",
+		"download.js" : "./addons/download.js",
+		"marks_addon.js" : "./addons/marks_addon.js",
+		"style.css" : "./style.css",
 	}
 
 	return function(){

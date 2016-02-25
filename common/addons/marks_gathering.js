@@ -129,7 +129,7 @@ function build_mark_obj(obj){
 	return null;
 }
 
-function exec(){
+(function(){
 	var path = window.location.pathname;
 	var regex = /notesEtu\.php$/;
 	
@@ -137,7 +137,4 @@ function exec(){
 	if(regex.test(path)){
 		addon_marks_gathering();
 	}
-}
-postpone('jQueryLoaded', function(){
-	return window.jQuery
-}, exec);
+})();

@@ -5,9 +5,13 @@ function safari_load_addons(){
 	//these fields should be in the addon file and more modular (lib)
 	addons.push({
 		"regex_path"  : /.*\.usherbrooke\.ca\/.*\/notesEtu\.php/,
-		"addon_path"  : "addons/marks.js",
-        "addon_data"  : "addons/marks_weighting.js",
-        "lib_path"    : "lib/external/jquery-2.1.4.min.js",
+		"addon_path"  : ["addons/marks_addon.js"],
+		"style_path"  : "style.css",
+	});
+	addons.push({
+		"regex_path"  : /.*\.usherbrooke\.ca\/.*\/doc.*/,
+		"addon_path"  : ["lib/external/jszip.min.js", "addons/utils.js", "addons/fetch.js",
+				"addons/download.js"],
 		"style_path"  : "style.css",
 	});
 }
@@ -15,9 +19,9 @@ function safari_load_addons(){
 function safari_exec_addons(){
 	addons.forEach(function(addon){
 		if(addon.regex_path.test(window.location.href)){
-            inject_script(addon.lib_path);
-			inject_script(addon.addon_path);
-            inject_script(addon.addon_data);
+			addon.addon_path.forEach(function(script_path) {
+				inject_script(script_path);
+			});
 		}
 	})
 }
@@ -26,6 +30,7 @@ function inject_script(url){
 	var url = safari.extension.baseURI + url;
 	var script = document.createElement("script");
 	script.src = url;
+	script.charset = 'UTF-8';
 	document.body.appendChild(script);
 }
 

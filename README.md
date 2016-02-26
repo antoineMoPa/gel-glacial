@@ -26,13 +26,13 @@ Voir les instructions pour safari plus bas dans «Développer pour Safari»
 
 ## Fonctionnalités
 
-### Amélioration de la grille de notes
 * Affichage des notes en pourcentage (Il faut appuyer le bouton)
 * Surlignement en jaune des nouvelles notes
 * Affichage de toutes les pondérations dans l'infobulle<br>
    Lorsqu'on survole les évaluations dont la note n'a pas encore été entrée.
 * Recalcul de la moyenne du groupe dans les cellules de notes finales.<br>
    (Sans l'extension, votre note accumulée est affichée et la moyenne du groupe est affichée)
+* Téléchargement de tous les fichiers (Intégration du code de @frederik-labbe: https://github.com/frederik-labbe/GelDocuments)
 
 ## Structure de fichiers
 

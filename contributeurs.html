@@ -18,6 +18,19 @@
 
     <!-- Custom styles for this template -->
     <link href="css/starter-template.css" rel="stylesheet">
+	
+	<style type="text/css">
+	.contribDiv
+	{
+		font-size: 1.5em;
+	}
+	
+	.GHavatar
+	{
+		margin-right: 10px;
+		width: 50px;
+	}
+	</style>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -38,10 +51,10 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a>Accueil</a></li>
+            <li><a href="index.html">Accueil</a></li>
 			<li><a>Télécharger</a></li>
 			<li><a>Licence</a></li>
-			<li><a href="contributeurs.html">Contributeurs</a></li>
+			<li class="active"><a>Contributeurs</a></li>
 			<li><a href="https://github.com/antoineMoPa/glacial">GitHub</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -50,35 +63,23 @@
 
 	<div class="jumbotron">
 		<div class="container">
-			<h1>Glacial</h1>
-			<p>Glacial est une extension développée par des étudiants en Génie Informatique et Génie Électrique de l'UdeS pour Firefox, Chrome et Safari qui ajoute certaines fonctionnalités à gel.usherbrooke.ca.</p>
-			<p id="glacialbouton"></p>
+			<h1>Contributeurs</h1>
+			<p>Ci-dessous est la liste de tous ceux qui ont contribué au projet glacial</p>
 		</div>
 	</div>
 	
     <div class="container">
+		<h2>Gestionnaire du dépôt</h2>
 		<div class="row">
-			<div class="col-md-4">
-				<h2>Licence</h2>
-				<p>Cette extension vous est fourni sous licence GNU GPL version 3. La licence Licence publique générale GNU est une licence copyleft libre pour les logiciels et autres types d'ouvrages.</p>
-				<p>
-					<a class="btn btn-default" href="#" role="button">Voir la licence »</a>
-				</p>
+			<div class="col-md-6 contribDiv">
+				<p><a id="contribMaitreSupreme"><img class="GHavatar" id="avatarMaitreSupreme"/></a></p>
 			</div>
-			<div class="col-md-4">
-				<h2>Contributeurs</h2>
-				<p>Visitez la page Contributeurs pour voir tous les valeureux guerriers qui ont contribué au projet.</p>
-				<p>
-					<a class="btn btn-default" href="#" role="button">Voir les contributeurs »</a>
-				</p>
+			<div class="col-md-6">
 			</div>
-			<div class="col-md-4">
-				<h2>Aidez-nous</h2>
-				<p>Visitez la page Github de glacial et aidez vous aussi à faire grandir ce projet.</p>
-				<p>
-					<a class="btn btn-default" href="https://github.com/antoineMoPa/glacial" role="button">Visitez le dépôt Github »</a>
-				</p>
-			</div>
+		</div>
+		
+		<div id="divContributeurs">
+			<h2>Contributeurs</h2>
 		</div>
 		
 		<hr></hr>
@@ -100,17 +101,61 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
 	<script src="js/detect_browser.js"></script>
-	<script>		
-		$.getJSON("https://api.github.com/repos/NewLunarFire/glacial/releases", "",
-			function(data, textStatus, jqXHR) {
-				var latestRelease = data[data.length - 1];
-				//$("#glacialversion").html(latestRelease.name);
-				//$("#glaciallien").attr("href", latestRelease.html_url);
-				
-				if((!isMobile.any()) && (BrowserDetect.browser == "Firefox"))
-				{
-					$("#glacialbouton").prepend("<a href=\"" + latestRelease.assets[0].browser_download_url + "\" class=\"btn btn-lg btn-warning\">Installer pour Firefox</a>");
+	<script>
+		var contributorCount = 0;
+		
+		//Récupérer la liste des contributeurs
+		function getUser(username, id)
+		{
+			//Fait le call à l'API de GitHub
+			$.getJSON("https://api.github.com/users/" + username, "",
+				function(data, textStatus, jqXHR) {
+					$("#avatar" + id).attr("src", data["avatar_url"]);
+					$("#contrib" + id).append(data["login"] + " (" + data["name"] + ")");
+					$("#contrib" + id).attr("href", data["html_url"]);
 				}
+			);
+		}
+		
+		function addContributor(element, array, index)
+		{
+			var username = element["author"]["login"];
+			if(username != "antoineMoPa")
+			{
+				var index = contributorCount++;
+				
+				if(index % 2 == 0)
+				{
+					//Crée la structure
+					var htmlString = "<div class=\"row\">";
+					htmlString += "<div class=\"col-md-6 contribDiv\">";
+					htmlString += "<p>";
+					htmlString += "<a id=\"contrib" + index + "\">";
+					htmlString += "<img class=\"GHavatar\" id=\"avatar" + index + "\"/> ";
+					htmlString += "</a>";
+					htmlString += "</p>";
+					htmlString += "</div>";
+					htmlString += "<div class=\"col-md-6 contribDiv\">";
+					htmlString += "<p>";
+					htmlString += "<a id=\"contrib" + (index+1) + "\">";
+					htmlString += "<img class=\"GHavatar\" id=\"avatar" + (index+1) + "\"/> ";
+					htmlString += "</a>";
+					htmlString += "</p>";
+					htmlString += "</div>";
+					htmlString += "</div>";
+				
+					//Ajoute l'élément dans la page
+					$("#divContributeurs").append(htmlString);
+				}
+				
+				getUser(username, index);
+			}
+		}
+		
+		getUser("antoineMoPa", "MaitreSupreme");
+		$.getJSON("https://api.github.com/repos/antoineMoPa/glacial/stats/contributors", "",
+			function(data, textStatus, jqXHR) {
+				data.forEach(addContributor);
 			}
 		);
 	</script>

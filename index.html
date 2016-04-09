@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Glacial - Accueil">
+    <meta name="author" content="Tommy Savaria">
+
+    <title>Glacial</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="navbar-brand" href="index.html">Glacial</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a>Accueil</a></li>
+			<li><a>Télécharger</a></li>
+			<li><a>Licence</a></li>
+			<li><a>Contributeurs</a></li>
+			<li><a href="https://github.com/antoineMoPa/glacial">GitHub</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+	<div class="jumbotron">
+		<div class="container">
+			<h1>Glacial</h1>
+			<p>Glacial est une extension développée par des étudiants en Génie Informatique et Génie Électrique de l'UdeS pour Firefox, Chrome et Safari qui ajoute certaines fonctionnalités à gel.usherbrooke.ca.</p>
+			<p id="glacialbouton"></p>
+		</div>
+	</div>
+	
+    <div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<h2>Licence</h2>
+				<p>Cette extension vous est fourni sous licence GNU GPL version 3. La licence Licence publique générale GNU est une licence copyleft libre pour les logiciels et autres types d'ouvrages.</p>
+				<p>
+					<a class="btn btn-default" href="#" role="button">Voir la licence »</a>
+				</p>
+			</div>
+			<div class="col-md-4">
+				<h2>Contributeurs</h2>
+				<p>Visitez la page Contributeurs pour voir tous les valeureux guerriers qui ont contribué au projet.</p>
+				<p>
+					<a class="btn btn-default" href="#" role="button">Voir les contributeurs »</a>
+				</p>
+			</div>
+			<div class="col-md-4">
+				<h2>Aidez-nous</h2>
+				<p>Visitez la page Github de glacial et aidez vous aussi à faire grandir ce projet.</p>
+				<p>
+					<a class="btn btn-default" href="https://github.com/antoineMoPa/glacial" role="button">Visitez le dépôt Github »</a>
+				</p>
+			</div>
+		</div>
+		
+		<hr></hr>
+		
+		<footer>
+			<p>Site web développé par Tommy Savaria</p>
+			<p>Contactez-moi à: <a href="mailto:tommy.savaria@protonmail.ch"><i>tommy.savaria@protonmail.ch</i></a></p>
+		</footer>
+
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+	<script src="js/detect_browser.js"></script>
+	<script>		
+		$.getJSON("https://api.github.com/repos/NewLunarFire/glacial/releases", "",
+			function(data, textStatus, jqXHR) {
+				var latestRelease = data[data.length - 1];
+				//$("#glacialversion").html(latestRelease.name);
+				//$("#glaciallien").attr("href", latestRelease.html_url);
+				
+				if((!isMobile.any()) && (BrowserDetect.browser == "Firefox"))
+				{
+					$("#glacialbouton").prepend("<a href=\"" + latestRelease.assets[0].browser_download_url + "\" class=\"btn btn-lg btn-warning\">Installer pour Firefox</a>");
+				}
+			}
+		);
+	</script>
+  </body>
+</html>

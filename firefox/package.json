@@ -1,7 +1,7 @@
 {
-  "title": "Gel Glacial",
-  "name": "gelglacial",
-  "version": "0.0.2",
+  "title": "Glacial",
+  "name": "glacial",
+  "version": "0.1.0",
   "description": "Pour améliorer l'interface de gel.usherbrooke.ca",
   "main": "index.js",
   "author": "Antoine Morin-Paulhus",

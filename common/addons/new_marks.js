@@ -25,7 +25,7 @@ function highlight_mark(row_index, cell_index){
 	row[cell_index + 3].style.backgroundColor = "yellow";
 }
 
-function exec(){
+(function(){
 	var path = window.location.pathname;
 	var regex = /notesEtu\.php$/;
 	
@@ -33,7 +33,4 @@ function exec(){
 	if(regex.test(path)){
 		addon_new_marks();
 	}
-}
-postpone('dataGathered', function(){
-	return typeof marks_grid !== 'undefined';
-}, exec);
+})();

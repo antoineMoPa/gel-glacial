@@ -19,6 +19,7 @@ function inject_script(url){
 	var url = chrome.extension.getURL(url);
 	var script = document.createElement("script");
 	script.src = url;
+	script.charset = 'UTF-8';
 	document.body.appendChild(script);
 }
 

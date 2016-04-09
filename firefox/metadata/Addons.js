@@ -1,7 +1,12 @@
 var addons = {
 	"marks" : {
-		"contentScriptFile" : ["jquery.js", "dependence_postponing.js", "marks_gathering.js", "marks.js", "marks_weighting.js", "new_marks.js", "average_fix.js"],
+		"contentScriptFile" : ["jquery.js", "marks_gathering.js", "marks.js", "marks_weighting.js", "new_marks.js", "average_fix.js"],
 		"contentStyleFile" : ["style.css"],
+	},
+	"zip_documents" : {
+		"contentScriptFile" : ["jszip.js", "utils.js", "fetch.js",
+					"download.js"],
+		"contentStyleFile" : ["style.css"]
 	}
 }
 
@@ -11,8 +16,11 @@ var paths = {
 	"marks.js" : "./addons/marks.js",
 	"marks_weighting.js" : "./addons/marks_weighting.js",
 	"marks_gathering.js" : "./addons/marks_gathering.js",
-	"dependence_postponing.js" : "./lib/dependence_postponing.js",
 	"average_fix.js" : "./addons/average_fix.js",
+	"jszip.js" : "./lib/external/jszip.min.js",
+	"utils.js" : "./addons/utils.js",
+	"fetch.js" : "./addons/fetch.js",
+	"download.js" : "./addons/download.js",
 	"new_marks.js" : "./addons/new_marks.js",
 	"style.css" : "./style.css",	
 }
@@ -22,7 +30,7 @@ function get_addons(){
 	
 	Object.keys(addons).forEach(function(key){
 		var addon = addons[key];
-		new_addons[key] =  {};
+		new_addons[key] = {};
 		new_addons[key].contentScriptFile = addon.contentScriptFile.map(function(script){
 			return paths[script];
 		})

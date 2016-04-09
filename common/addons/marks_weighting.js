@@ -13,7 +13,7 @@ function addon_ponderation(){
 	// Btn : Get All Ponderation
 	btn_ponderation= document.createElement("button");
 	btn_ponderation.id = "btn_ponderation";
-	btn_ponderation.innerHTML = "Affiche toutes les ponderations";
+	btn_ponderation.innerHTML = "Afficher toutes les pond&eacute;rations";
 	btn_ponderation.classList.add("gel-glacial");
 	btn_ponderation.onclick = get_all_ponderation;
 
@@ -36,7 +36,7 @@ function get_all_ponderation(){
     
 	// Disable btn for loading
 	btn_ponderation.disabled = true;
-	btn_ponderation.innerHTML = "Telechargement...";
+	btn_ponderation.innerHTML = "T&eacute;l&eacute;chargement...";
 	
 	// Set url to get data ponderation
 	var url = window.location.href;
@@ -69,10 +69,18 @@ function get_all_ponderation(){
 		}
 		unsafeWindow.dataToolTip = dataToolTip;
 
-		btn_ponderation.onclick = show_hide_ponderation;
-		btn_ponderation.disabled = false;
+		//btn_ponderation.onclick = show_hide_ponderation;
+		//btn_ponderation.disabled = false;
+
+		// Hide button after loading data
+		
+		document.getElementById('ponderation_grid')
+			.style.display = 'none';
+		
+		btn_ponderation.style.display = 'none';
+		
 		// Hide grid
-		show_hide_ponderation();
+		//show_hide_ponderation();
 	});
 }
 
@@ -113,7 +121,7 @@ function countProperties(obj) {
 }
 
 // Exec
-function exec(){
+(function(){
 	var path = window.location.pathname;
 	var regex = /notesEtu\.php$/;
 	
@@ -121,5 +129,4 @@ function exec(){
 	if(regex.test(path)){
 		addon_ponderation();
 	}
-}
-exec();
+})();

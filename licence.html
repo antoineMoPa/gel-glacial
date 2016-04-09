@@ -18,20 +18,20 @@
 
     <!-- Custom styles for this template -->
     <link href="css/starter-template.css" rel="stylesheet">
-	
-	<style type="text/css">
-	.contribDiv
-	{
-		font-size: 1.5em;
-	}
-	
-	.GHavatar
-	{
-		margin-right: 10px;
-		width: 50px;
-	}
-	</style>
 
+	<style type="text/css">
+		#licenceDiv
+		{
+			text-align: center;
+		}
+		
+		#licence
+		{
+			text-align: left;
+			white-space: pre;
+			display: inline-block;
+		}
+	</style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -53,8 +53,8 @@
           <ul class="nav navbar-nav">
             <li><a href="index.html">Accueil</a></li>
 			<li><a>Télécharger</a></li>
-			<li><a href="licence.html">Licence</a></li>
-			<li class="active"><a>Contributeurs</a></li>
+			<li class="active"><a>Licence</a></li>
+			<li><a href="contributeurs.html">Contributeurs</a></li>
 			<li><a href="https://github.com/antoineMoPa/glacial">GitHub</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -63,23 +63,15 @@
 
 	<div class="jumbotron">
 		<div class="container">
-			<h1>Contributeurs</h1>
-			<p>Ci-dessous est la liste de tous ceux qui ont contribué au projet glacial</p>
+			<h1>Licence</h1>
+			<p>Glacial est un logiciel libre sous licence GPLv3. Les détails de la licence sont présentés ci-dessous.</p>
 		</div>
 	</div>
 	
     <div class="container">
-		<h2>Gestionnaire du dépôt</h2>
-		<div class="row">
-			<div class="col-md-6 contribDiv">
-				<p><a id="contribMaitreSupreme"><img class="GHavatar" id="avatarMaitreSupreme"/></a></p>
-			</div>
-			<div class="col-md-6">
-			</div>
-		</div>
 		
-		<div id="divContributeurs">
-			<h2>Contributeurs</h2>
+		<div id="licenceDiv">
+			<pre id="licence"></pre>
 		</div>
 		
 		<hr></hr>
@@ -102,62 +94,11 @@
     <script src="js/ie10-viewport-bug-workaround.js"></script>
 	<script src="js/detect_browser.js"></script>
 	<script>
-		var contributorCount = 0;
-		
-		//Récupérer la liste des contributeurs
-		function getUser(username, id)
-		{
-			//Fait le call à l'API de GitHub
-			$.getJSON("https://api.github.com/users/" + username, "",
-				function(data, textStatus, jqXHR) {
-					$("#avatar" + id).attr("src", data["avatar_url"]);
-					$("#contrib" + id).append(data["login"] + " (" + data["name"] + ")");
-					$("#contrib" + id).attr("href", data["html_url"]);
-				}
-			);
-		}
-		
-		function addContributor(element, array, index)
-		{
-			var username = element["author"]["login"];
-			if(username != "antoineMoPa")
-			{
-				var index = contributorCount++;
-				
-				if(index % 2 == 0)
-				{
-					//Crée la structure
-					var htmlString = "<div class=\"row\">";
-					htmlString += "<div class=\"col-md-6 contribDiv\">";
-					htmlString += "<p>";
-					htmlString += "<a id=\"contrib" + index + "\">";
-					htmlString += "<img class=\"GHavatar\" id=\"avatar" + index + "\"/> ";
-					htmlString += "</a>";
-					htmlString += "</p>";
-					htmlString += "</div>";
-					htmlString += "<div class=\"col-md-6 contribDiv\">";
-					htmlString += "<p>";
-					htmlString += "<a id=\"contrib" + (index+1) + "\">";
-					htmlString += "<img class=\"GHavatar\" id=\"avatar" + (index+1) + "\"/> ";
-					htmlString += "</a>";
-					htmlString += "</p>";
-					htmlString += "</div>";
-					htmlString += "</div>";
-				
-					//Ajoute l'élément dans la page
-					$("#divContributeurs").append(htmlString);
-				}
-				
-				getUser(username, index);
-			}
-		}
-		
-		getUser("antoineMoPa", "MaitreSupreme");
-		$.getJSON("https://api.github.com/repos/antoineMoPa/glacial/stats/contributors", "",
+		$.get("https://raw.githubusercontent.com/antoineMoPa/glacial/master/LICENSE", "",
 			function(data, textStatus, jqXHR) {
-				data.forEach(addContributor);
+				$("#licence").append(data.replace("<", "&lt;").replace("<", "&gt;"));
 			}
-		);
+		, "text");
 	</script>
   </body>
 </html>

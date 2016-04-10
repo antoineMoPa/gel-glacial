@@ -101,97 +101,67 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
 	<script src="js/detect_browser.js"></script>
+	<script src="js/glacial.js"></script>
 	<script>
-		var releases = [];
-		
-		//Create a new Releasem object
-		function Release(rel)
+		function populateReleaseTable()
 		{
-			this.name = rel.name;
-			this.zip = rel.tarball_url;
-			this.tarball = rel.zipball_url;
-			
-			var ff = undefined;
-			var cr = undefined;
-			
-			rel.assets.forEach( function(element, array, index) {
-					var temp = element.browser_download_url.split(".");
-					if(temp[temp.length - 1] == "xpi")
-					{
-						//Firefox XPI
-						ff = element.browser_download_url;
-					}
-					else if(temp[temp.length - 1] == "crx")
-					{
-						//Chrome CRX
-						cr = element.browser_download_url;
-					}
-				}			
-			);
-			
-			this.firefox = ff;
-			this.chrome = cr;
-		}
-		
-		function addRelease(rel)
-		{
-			var htmlString = "<tr>";
-			htmlString += "<td class=\"col-md-4\">";
-			htmlString += rel.name;
-			htmlString += "</td>";
-			htmlString += "<td class=\"col-md-2 cellcenter\">"
-			
-			//If there is an xpi for FireFox
-			if(rel.firefox !== undefined)
-				htmlString += "<a href=\"" + rel.firefox + "\" class=\"btn btn-default btn-warning\">Firefox</a>";
-			
-			htmlString += "</td>";
-			htmlString += "<td class=\"col-md-2 cellcenter\">"
-			
-			//If there is a crx for Chrome
-			if(rel.chrome !== undefined)
-				htmlString += "<a href=\"" + rel.chrome + "\" class=\"btn btn-default btn-primary\">Chrome</a>";
-			
-			htmlString += "</td>";
-			htmlString += "<td class=\"col-md-2 cellcenter\">"
-			
-			//Zipball
-			htmlString += "<a href=\"" + rel.zip + "\" class=\"btn btn-default\">Source (zip)</a>";
-			
-			htmlString += "</td>";
-			htmlString += "<td class=\"col-md-2 cellcenter\">"
-			
-			//Tarball
-			htmlString += "<a href=\"" + rel.tarball + "\" class=\"btn btn-default\">Source (tar.gz)</a>";
-			
-			htmlString += "</td>";
-			htmlString += "</tr>"
-			
-			$("#releasetable").append(htmlString);
-		}
-		
-		function addPreferredLink(array)
-		{
-		}
-		
-		$.getJSON("https://api.github.com/repos/antoineMoPa/glacial/releases", "",
-			function(data, textStatus, jqXHR) {
-				for(var i = 0; i < data.length; i++)
-				{
-					releases.push(new Release(data[i]));
-					addRelease(releases[i])
-				}
-			
-				var latestRelease = data[data.length - 1];
-				//$("#glacialversion").html(latestRelease.name);
-				//$("#glaciallien").attr("href", latestRelease.html_url);
+			releaseList.forEach(function(rel, array, index) {
+				var htmlString = "<tr>";
+				htmlString += "<td class=\"col-md-4\">";
+				htmlString += rel.name;
+				htmlString += "</td>";
+				htmlString += "<td class=\"col-md-2 cellcenter\">"
 				
+				//If there is an xpi for FireFox
+				if(rel.firefox !== undefined)
+					htmlString += "<a href=\"" + rel.firefox + "\" class=\"btn btn-default btn-warning\">Firefox</a>";
+				
+				htmlString += "</td>";
+				htmlString += "<td class=\"col-md-2 cellcenter\">"
+				
+				//If there is a crx for Chrome
+				if(rel.chrome !== undefined)
+					htmlString += "<a href=\"" + rel.chrome + "\" class=\"btn btn-default btn-primary\">Chrome</a>";
+				
+				htmlString += "</td>";
+				htmlString += "<td class=\"col-md-2 cellcenter\">"
+				
+				//Zipball
+				htmlString += "<a href=\"" + rel.zip + "\" class=\"btn btn-default\">Source (zip)</a>";
+				
+				htmlString += "</td>";
+				htmlString += "<td class=\"col-md-2 cellcenter\">"
+				
+				//Tarball
+				htmlString += "<a href=\"" + rel.tarball + "\" class=\"btn btn-default\">Source (tar.gz)</a>";
+				
+				htmlString += "</td>";
+				htmlString += "</tr>"
+				
+				$("#releasetable").append(htmlString);
+			});
+		}
+		
+		function addPreferredLink()
+		{
+			var release = getPreferredRelease();
+			
+			if(release !== undefined)
+			{
 				if((!isMobile.any()) && (BrowserDetect.browser == "Firefox"))
-				{
-					$("#glacialbouton").prepend("<a href=\"" + latestRelease.assets[0].browser_download_url + "\" class=\"btn btn-lg btn-warning\">" + latestRelease.name + " pour Firefox</a>");
-				}
+					$("#glacialbouton").prepend("<a href=\"" + release.firefox + "\" class=\"btn btn-lg btn-warning\">" + release.name + " pour Firefox</a>");
+				else if((!isMobile.any()) && (BrowserDetect.browser == "Chrome"))
+					$("#glacialbouton").prepend("<a href=\"" + release.chrome + "\" class=\"btn btn-lg btn-primary\">" + release.name + " pour Chrome</a>");
 			}
-		);
+		}
+		
+		function updatePage()
+		{
+			populateReleaseTable();
+			addPreferredLink();
+		}
+		
+		getReleases(updatePage);	
 	</script>
   </body>
 </html>

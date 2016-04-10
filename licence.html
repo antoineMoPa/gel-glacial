@@ -93,12 +93,14 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
 	<script src="js/detect_browser.js"></script>
+	<script src="js/glacial.js"></script>
 	<script>
-		$.get("https://raw.githubusercontent.com/antoineMoPa/glacial/master/LICENSE", "",
-			function(data, textStatus, jqXHR) {
-				$("#licence").append(data.replace("<", "&lt;").replace("<", "&gt;"));
-			}
-		, "text");
+		function setLicenseText()
+		{
+			$("#licence").append(licenseText);
+		}
+		
+		getLicense(setLicenseText);
 	</script>
   </body>
 </html>

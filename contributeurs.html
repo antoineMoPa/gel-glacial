@@ -101,63 +101,58 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
 	<script src="js/detect_browser.js"></script>
+	<script src="js/glacial.js"></script>
 	<script>
-		var contributorCount = 0;
-		
-		//Récupérer la liste des contributeurs
-		function getUser(username, id)
-		{
-			//Fait le call à l'API de GitHub
-			$.getJSON("https://api.github.com/users/" + username, "",
-				function(data, textStatus, jqXHR) {
-					$("#avatar" + id).attr("src", data["avatar_url"]);
-					$("#contrib" + id).append(data["login"] + " (" + data["name"] + ")");
-					$("#contrib" + id).attr("href", data["html_url"]);
-				}
-			);
-		}
+		var maitreSupreme = "antoineMoPa";
+		var idx = 0;
 		
 		function addContributor(element, array, index)
 		{
-			var username = element["author"]["login"];
-			if(username != "antoineMoPa")
-			{
-				var index = contributorCount++;
-				
-				if(index % 2 == 0)
-				{
-					//Crée la structure
-					var htmlString = "<div class=\"row\">";
-					htmlString += "<div class=\"col-md-6 contribDiv\">";
-					htmlString += "<p>";
-					htmlString += "<a id=\"contrib" + index + "\">";
-					htmlString += "<img class=\"GHavatar\" id=\"avatar" + index + "\"/> ";
-					htmlString += "</a>";
-					htmlString += "</p>";
-					htmlString += "</div>";
-					htmlString += "<div class=\"col-md-6 contribDiv\">";
-					htmlString += "<p>";
-					htmlString += "<a id=\"contrib" + (index+1) + "\">";
-					htmlString += "<img class=\"GHavatar\" id=\"avatar" + (index+1) + "\"/> ";
-					htmlString += "</a>";
-					htmlString += "</p>";
-					htmlString += "</div>";
-					htmlString += "</div>";
-				
-					//Ajoute l'élément dans la page
-					$("#divContributeurs").append(htmlString);
-				}
-				
-				getUser(username, index);
-			}
+			var id;
+			
+			if(element.login == maitreSupreme)
+				id = "MaitreSupreme";
+			else
+				id = idx++;
+			
+			$("#avatar" + id).attr("src", element.avatar);
+			$("#contrib" + id).append(element.login + " (" + element.name + ")");
+			$("#contrib" + id).attr("href", element.url);
 		}
 		
-		getUser("antoineMoPa", "MaitreSupreme");
-		$.getJSON("https://api.github.com/repos/antoineMoPa/glacial/stats/contributors", "",
-			function(data, textStatus, jqXHR) {
-				data.forEach(addContributor);
-			}
-		);
+		function addRow(n)
+		{
+			//Create structure
+			var htmlString = "<div class=\"row\">";
+			htmlString += "<div class=\"col-md-6 contribDiv\">";
+			htmlString += "<p>";
+			htmlString += "<a id=\"contrib" + n + "\">";
+			htmlString += "<img class=\"GHavatar\" id=\"avatar" + n + "\"/> ";
+			htmlString += "</a>";
+			htmlString += "</p>";
+			htmlString += "</div>";
+			htmlString += "<div class=\"col-md-6 contribDiv\">";
+			htmlString += "<p>";
+			htmlString += "<a id=\"contrib" + (n+1) + "\">";
+			htmlString += "<img class=\"GHavatar\" id=\"avatar" + (n+1) + "\"/> ";
+			htmlString += "</a>";
+			htmlString += "</p>";
+			htmlString += "</div>";
+			htmlString += "</div>";
+			
+			//Ajoute l'élément dans la page
+			$("#divContributeurs").append(htmlString);
+		}
+		
+		function populateCollaboratorList()
+		{
+			for(var i = 0; i < collaboratorList.length - 1; i+=2)
+				addRow(i);
+				
+			collaboratorList.forEach(addContributor);
+		}
+		
+		getCollaborators(populateCollaboratorList);
 	</script>
   </body>
 </html>

@@ -19,6 +19,26 @@
     <!-- Custom styles for this template -->
     <link href="css/starter-template.css" rel="stylesheet">
 
+	<style type="text/css">
+		#releasetable
+		{
+			border-spacing: 0% 2%;
+			border-collapse: separate;
+			width: 100%;
+		}
+		
+		#releasetable td
+		{
+			padding-top: 1%;
+			padding-bottom: 1%;
+			border-bottom: 1px solid gray;
+		}
+		
+		.cellcenter
+		{
+			text-align: center;
+		}
+	</style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -38,8 +58,8 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a>Accueil</a></li>
-			<li><a href="telechargement.html">Télécharger</a></li>
+            <li><a href="index.html">Accueil</a></li>
+			<li class="active"><a>Télécharger</a></li>
 			<li><a href="licence.html">Licence</a></li>
 			<li><a href="contributeurs.html">Contributeurs</a></li>
 			<li><a href="https://github.com/antoineMoPa/glacial">GitHub</a></li>
@@ -50,36 +70,17 @@
 
 	<div class="jumbotron">
 		<div class="container">
-			<h1>Glacial</h1>
-			<p>Glacial est une extension développée par des étudiants en Génie Informatique et Génie Électrique de l'UdeS pour Firefox, Chrome et Safari qui ajoute certaines fonctionnalités à gel.usherbrooke.ca.</p>
+			<h1>Téléchargements</h1>
+			<p>Vous avez ici tous les liens de téléchargements pour toutes les versions de Glacial. Nous vous suggérons la suivante, mais vous pouvez aller en chercher une plus vieille si vous les désirez.</p>
 			<p id="glacialbouton"></p>
 		</div>
 	</div>
 	
     <div class="container">
-		<div class="row">
-			<div class="col-md-4">
-				<h2>Licence</h2>
-				<p>Cette extension vous est fourni sous licence GNU GPL version 3. La licence Licence publique générale GNU est une licence copyleft libre pour les logiciels et autres types d'ouvrages.</p>
-				<p>
-					<a class="btn btn-default" href="licence.html" role="button">Voir la licence »</a>
-				</p>
-			</div>
-			<div class="col-md-4">
-				<h2>Contributeurs</h2>
-				<p>Visitez la page Contributeurs pour voir tous les valeureux guerriers qui ont contribué au projet.</p>
-				<p>
-					<a class="btn btn-default" href="contributeurs.html" role="button">Voir les contributeurs »</a>
-				</p>
-			</div>
-			<div class="col-md-4">
-				<h2>Aidez-nous</h2>
-				<p>Visitez la page Github de glacial et aidez vous aussi à faire grandir ce projet.</p>
-				<p>
-					<a class="btn btn-default" href="https://github.com/antoineMoPa/glacial" role="button">Visitez le dépôt Github »</a>
-				</p>
-			</div>
-		</div>
+		
+		<h2>Releases</h2>
+		
+		<table id="releasetable"></table>
 		
 		<hr></hr>
 		
@@ -100,16 +101,94 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
 	<script src="js/detect_browser.js"></script>
-	<script>		
-		$.getJSON("https://api.github.com/repos/NewLunarFire/glacial/releases", "",
+	<script>
+		var releases = [];
+		
+		//Create a new Releasem object
+		function Release(rel)
+		{
+			this.name = rel.name;
+			this.zip = rel.tarball_url;
+			this.tarball = rel.zipball_url;
+			
+			var ff = undefined;
+			var cr = undefined;
+			
+			rel.assets.forEach( function(element, array, index) {
+					var temp = element.browser_download_url.split(".");
+					if(temp[temp.length - 1] == "xpi")
+					{
+						//Firefox XPI
+						ff = element.browser_download_url;
+					}
+					else if(temp[temp.length - 1] == "crx")
+					{
+						//Chrome CRX
+						cr = element.browser_download_url;
+					}
+				}			
+			);
+			
+			this.firefox = ff;
+			this.chrome = cr;
+		}
+		
+		function addRelease(rel)
+		{
+			var htmlString = "<tr>";
+			htmlString += "<td class=\"col-md-4\">";
+			htmlString += rel.name;
+			htmlString += "</td>";
+			htmlString += "<td class=\"col-md-2 cellcenter\">"
+			
+			//If there is an xpi for FireFox
+			if(rel.firefox !== undefined)
+				htmlString += "<a href=\"" + rel.firefox + "\" class=\"btn btn-default btn-warning\">Firefox</a>";
+			
+			htmlString += "</td>";
+			htmlString += "<td class=\"col-md-2 cellcenter\">"
+			
+			//If there is a crx for Chrome
+			if(rel.chrome !== undefined)
+				htmlString += "<a href=\"" + rel.chrome + "\" class=\"btn btn-default btn-primary\">Chrome</a>";
+			
+			htmlString += "</td>";
+			htmlString += "<td class=\"col-md-2 cellcenter\">"
+			
+			//Zipball
+			htmlString += "<a href=\"" + rel.zip + "\" class=\"btn btn-default\">Source (zip)</a>";
+			
+			htmlString += "</td>";
+			htmlString += "<td class=\"col-md-2 cellcenter\">"
+			
+			//Tarball
+			htmlString += "<a href=\"" + rel.tarball + "\" class=\"btn btn-default\">Source (tar.gz)</a>";
+			
+			htmlString += "</td>";
+			htmlString += "</tr>"
+			
+			$("#releasetable").append(htmlString);
+		}
+		
+		function addPreferredLink(array)
+		{
+		}
+		
+		$.getJSON("https://api.github.com/repos/antoineMoPa/glacial/releases", "",
 			function(data, textStatus, jqXHR) {
+				for(var i = 0; i < data.length; i++)
+				{
+					releases.push(new Release(data[i]));
+					addRelease(releases[i])
+				}
+			
 				var latestRelease = data[data.length - 1];
 				//$("#glacialversion").html(latestRelease.name);
 				//$("#glaciallien").attr("href", latestRelease.html_url);
 				
 				if((!isMobile.any()) && (BrowserDetect.browser == "Firefox"))
 				{
-					$("#glacialbouton").prepend("<a href=\"" + latestRelease.assets[0].browser_download_url + "\" class=\"btn btn-lg btn-warning\">Installer pour Firefox</a>");
+					$("#glacialbouton").prepend("<a href=\"" + latestRelease.assets[0].browser_download_url + "\" class=\"btn btn-lg btn-warning\">" + latestRelease.name + " pour Firefox</a>");
 				}
 			}
 		);
